@@ -1,0 +1,6 @@
+{
+    "UDCCommon": {
+        "DoNotSend":"0",
+        "TestMode":"ForceSend"
+    }
+}
