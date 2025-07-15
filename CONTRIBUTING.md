@@ -1,11 +1,11 @@
-# Contributing to \<reponame\> 
+# Contributing to labview-for-containers
 
-Contributions to \<reponame\> are welcome from all!
+Contributions to `labview-for-containers` are welcome from all!
 
-\<reponame\> is managed via [git](https://git-scm.com), with the canonical upstream
-repository hosted on [GitHub](https://github.com/ni/<reponame>/).
+`labview-for-containers` is managed via [git](https://git-scm.com), with the canonical upstream
+repository hosted on [GitHub](https://github.com/ni/labview-for-containers/).
 
-\<reponame\> follows a pull-request model for development.  If you wish to
+`labview-for-containers` follows a pull-request model for development.  If you wish to
 contribute, you will need to create a GitHub account, fork this project, push a
 branch with your changes to your project, and then submit a pull request.
 
@@ -21,11 +21,11 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 # Getting Started
 
-- TODO: include build steps here.
+Please refer: [README](./README.md)
 
 # Testing
 
-- TODO: include testing steps here.
+- TODO: Check if a test pipeline can be setup.
 
 # Developer Certificate of Origin (DCO)
 
@@ -57,5 +57,5 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 (taken from [developercertificate.org](https://developercertificate.org/))
 
-See [LICENSE](https://github.com/ni/<reponame>/blob/main/LICENSE)
-for details about how \<reponame\> is licensed.
+See [LICENSE](https://github.com/ni/labview-for-containers/blob/main/LICENSE)
+for details about how `labview-for-containers` is licensed.
