@@ -2,10 +2,8 @@ name: Run LabVIEWCLI on Linux Container
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    paths:
+      - 'integration-into-cicd/Test-VIs/**'
 
 jobs:
   run-labview-cli:
@@ -23,12 +21,12 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Pull Docker Image from Docker Hub
-        run: docker pull ghcr.io/shivacode-2/labview:2025q3-linux
+        run: docker pull ghcr.io/${{ secrets.GHCR_UNAME }}/labview:2025q3-linux
 
       - name: Run LabVIEWCLI Operations
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            ghcr.io/shivacode-2/labview:2025q3-linux \
-            bash -c "cd /workspace && chmod +x runlabview.sh && ./runlabview.sh"
+            ghcr.io/${{ secrets.GHCR_UNAME }}/labview:2025q3-linux \
+            bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
 

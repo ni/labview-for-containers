@@ -1,8 +1,8 @@
 #!/bin/bash
-CONFIG_FILE='/workspace/Test-VIs/viaPassCase.viancfg'
+CONFIG_FILE='/workspace/examples/integration-into-cicd/Test-VIs/viaPassCase.viancfg'
 LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
-MASSCOMPILE_DIR='/workspace/Test-VIs'
+MASSCOMPILE_DIR='/workspace/examples/integration-into-cicd/Test-VIs'
 
 # Verify that the configuration file exists.
 if [ ! -f "$CONFIG_FILE" ]; then

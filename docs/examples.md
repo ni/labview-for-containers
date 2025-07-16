@@ -11,7 +11,7 @@ Run Static code analysis on VIs using VI Analyzer Toolkit
     -ReportPath <Location for saving the report> \
     -LabVIEWPath <Path to LabVIEW Executable>
 ```
-![Run VI Analyzer](VIA.PNG)
+![Run VI Analyzer](../examples/VIA.PNG)
 
 ### LabVIEWCLI: CreateComparisonReport
 Create a diff report between two VIs
@@ -25,10 +25,10 @@ Create a diff report between two VIs
     -ReportPath ReportPath.html
 ```
 
-![VIDiff](CompareReport.PNG)
+![VIDiff](../examples/CompareReport.PNG)
 
 **Generated Report:**
-![GeneratedReport](./DiffReport.PNG)
+![GeneratedReport](../examples/DiffReport.PNG)
 
 ### LabVIEWCLI: MassCompile VIs
 MassCompile a Directory
@@ -38,7 +38,7 @@ MassCompile a Directory
     LabVIEWCLI -OperationName MassCompile -DirectoryToCompile <Directory to Compile> -LabVIEWPath <Path to LabVIEW Executable>
 ```
 
-![MassCompile](./MassCompile.PNG)
+![MassCompile](../examples/MassCompile.PNG)
 
 ### LabVIEWCLI: RunVI
 Run a specific VI on the system.
@@ -63,7 +63,7 @@ You can launch the container with LabVIEWCLI as the main process like this:
 docker run --rm --entrypoint LabVIEWCLI labview:2025q3-linux
 ```
 
-![Entrypoiny](./Entrypoint.PNG)
+![Entrypoiny](../examples/Entrypoint.PNG)
 
 This will start the container, run LabVIEWCLI, and then terminate the container once the CLI process exits.
 
@@ -82,7 +82,7 @@ Let's mount a local directory into the container and see the contents of a text 
     docker run -it -v C:\ni:/mounted_directory labview:2025q3-linux
 ```
 
-![Mount](./MountLocalDir.PNG)
+![Mount](../examples/MountLocalDir.PNG)
 
 - `-v C:\ni:/mounted_directory` tells Docker to mount your local folder into `/mounted_directory `inside the container.
 - The container will have read/write access to the mounted folder.
