@@ -56,14 +56,27 @@ ni/labview         2025q3-linux   abc123xyz...   2 days ago     3.2GB
 ```
 ## Running the image
 **_TODO:** Update links to the image on dockerhub once available.
-Once successfully pulled, Use the command to drop into the interactive shell on the container:
+Once the image has been successfully pulled, run the following command to enter the container’s interactive shell:
 ```
     docker run -it <PlaceHolder for link>/labview:2025q3-linux
 ```
 
-You should be in the bash shell of the container now.
+This will drop you into a Bash shell inside the container.
 
-After this you are good to run your LabVIEWCLI Commands. 
+From here, you're ready to execute **LabVIEWCLI commands** to run VIs, perform builds, or run VI Analyzer tests. 
 
 ## Examples
-If you want examples on how to use LabVIEWCLI, change the default entrypoint for the container or mount volumes please see [Examples](./examples.md)
+For detailed examples on:
+- Using **LabVIEWCLI**
+- Changing the **default entrypoint**
+- **Mounting local volumes** to access your source files
+Please see the [Examples Guide](./examples.md)
+---
+**NOTE:** By default, the NI's Customer Experience Improvement Program (CEIP) is enabled on the image and we collect anonymous information about the use of NI products, your computer or device, and connected devices. NI uses the aggregate of this information to improve the products and features customers use most often and to help solve problems. We do not collect personal data or proprietary application information, and we do not sell usage information to third parties.
+
+For more information on NI's Customer Experience Improvement Program please see this: [NI Customer Experience Improvement Program](https://www.ni.com/en/about-ni/legal/ceip.html?srsltid=AfmBOorZGikj9CSWmeYxwtWemmv_Byhk3ew3YcSwNaRmAhkIBtCzXWmF)
+
+To enable/disable the collection of CEIP Data, execute this command once inside the container shell:
+```
+LabVIEWCLI -OperationName RunVI -VIPath /usr/local/natinst/share/nilvcli/supportVIs/ToggleCEIP.vi <ON/OFF> -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labview
+```
