@@ -29,6 +29,5 @@ jobs:
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            ghcr.io/shivacode-2/labview:2025q3-linux \
-            bash -c "cd /workspace && chmod +x runlabview.sh && ./runlabview.sh"
-
+            ghcr.io/${{ secrets.GHCR_UNAME }}/labview:2025q3-linux \
+            bash -c "cd /workspace/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
