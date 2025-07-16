@@ -39,18 +39,18 @@ Use `LabVIEWCLI` as the primary interface for interacting with LabVIEW within th
 The prebuilt image is hosted on NI’s official DockerHub account and is configured to allow anonymous pulls (no login required).
 
 Use the command:
-```
+```shell
     docker pull <PlaceHolder for the link>/labview:2025q3-linux
 ```
 Once the image is pulled successfully, it will be available locally and ready to use in your CI/CD pipeline or development environment.
 
 You can verify the image is available by running:
-```
+```shell
     docker images
 ```
 Look for an entry similar to:
 
-```
+```s
 REPOSITORY         TAG         IMAGE ID       CREATED        SIZE
 
 ni/labview         2025q3-linux   abc123xyz...   2 days ago     3.2GB
@@ -58,7 +58,7 @@ ni/labview         2025q3-linux   abc123xyz...   2 days ago     3.2GB
 ## Running the image
 **_TODO:** Update links to the image on dockerhub once available.
 Once the image has been successfully pulled, run the following command to enter the container’s interactive shell:
-```
+```shell
     docker run -it <PlaceHolder for link>/labview:2025q3-linux
 ```
 
@@ -79,6 +79,6 @@ Please see the [Examples Guide](./examples.md)
 For more information on NI's Customer Experience Improvement Program please see this: [NI Customer Experience Improvement Program](https://www.ni.com/en/about-ni/legal/ceip.html?srsltid=AfmBOorZGikj9CSWmeYxwtWemmv_Byhk3ew3YcSwNaRmAhkIBtCzXWmF)
 
 To **enable/disable the collection of CEIP Data**, execute this command once inside the container shell:
-```
+```bash
 LabVIEWCLI -OperationName RunVI -VIPath /usr/local/natinst/share/nilvcli/supportVIs/ToggleCEIP.vi <ON/OFF> -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labview
 ```
