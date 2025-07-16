@@ -76,7 +76,7 @@ Please see the [Examples Guide](./examples.md)
 
 For more information on NI's Customer Experience Improvement Program please see this: [NI Customer Experience Improvement Program](https://www.ni.com/en/about-ni/legal/ceip.html?srsltid=AfmBOorZGikj9CSWmeYxwtWemmv_Byhk3ew3YcSwNaRmAhkIBtCzXWmF)
 
-To enable/disable the collection of CEIP Data, execute this command once inside the container shell:
+To **enable/disable the collection of CEIP Data**, execute this command once inside the container shell:
 ```
 LabVIEWCLI -OperationName RunVI -VIPath /usr/local/natinst/share/nilvcli/supportVIs/ToggleCEIP.vi <ON/OFF> -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labview
 ```
