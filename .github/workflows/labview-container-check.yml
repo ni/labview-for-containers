@@ -2,8 +2,12 @@ name: Run LabVIEWCLI on Linux Container
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
     paths:
-      - 'integration-into-cicd/Test-VIs/**'
+      - 'examples/integration-into-cicd/Test-VIs/**'
 
 jobs:
   run-labview-cli:

@@ -48,7 +48,7 @@ The Documentation contains information about:
 3. How to Build
 
 ## Example Usages
-This section contains information on example use cases of LabVIEW Linux Image. 
+This [Example Guide](./docs/examples.md) contains information on example use cases of LabVIEW Linux Image. 
 
 ## License
 See [LICENSE](./LICENSE)
