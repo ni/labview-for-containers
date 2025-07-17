@@ -43,12 +43,16 @@ The documentation contains information about:
 ## How to build your own Image (For Advanced Users)
 Please see the [Build your Own Image]() guide for full details.
 The Documentation contains information about:
-1. Required Dependencies
-2. Dockerfile Anatomy
-3. How to Build
+1. Prerequisites
+2. Important Dependencies
+3. Dockerfile Overview
+4. Building the Image
 
 ## Example Usages
 This [Example Guide](./docs/examples.md) contains information on example use cases of LabVIEW Linux Image. 
+
+## Frequently Asked Questions (FAQs)
+See the FAQ section [here.](./docs/faqs.md)
 
 ## License
 See [LICENSE](./LICENSE)
