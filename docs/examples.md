@@ -116,7 +116,7 @@ The action is set to be triggered when any pull request is created, updated or r
 ### Running the GitHub Action
 A testing Pull Request has been created that demonstrates the use of the script `runlabview.sh` and the GitHub Action to run LabVIEWCLI inside a container.
 
-Link to the Pull Request: [Integration into CI/CD](https://github.com/ni/labview-for-containers/pull/5)
+Link to the Pull Request: [Integration into CI/CD](https://github.com/ni/labview-for-containers/pull/8)
 
 - When a Pull Request is opened, a status check running the GitHub Action can be seen.
     ![CICD-PullRequest](../examples/int-cicd.PNG)

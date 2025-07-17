@@ -41,7 +41,7 @@ The documentation contains information about:
 4. Example Usages
 
 ## How to build your own Image (For Advanced Users)
-Please see the [Build your Own Image]() guide for full details.
+Please see the [Build your Own Image](./docs/build-your-own-image.md) guide for full details.
 The Documentation contains information about:
 1. Prerequisites
 2. Important Dependencies
@@ -56,4 +56,3 @@ See the FAQ section [here.](./docs/faqs.md)
 
 ## License
 See [LICENSE](./LICENSE)
-
