@@ -6,8 +6,6 @@ on:
       - opened
       - synchronize
       - reopened
-    paths:
-      - 'examples/integration-into-cicd/Test-VIs/**'
 
 jobs:
   run-labview-cli:
