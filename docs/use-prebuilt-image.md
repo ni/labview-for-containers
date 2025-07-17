@@ -36,6 +36,7 @@ Use `LabVIEWCLI` as the primary interface for interacting with LabVIEW within th
 
 ## Accessing the image
 **_TODO:** Update links to the image on dockerhub once available.
+
 The prebuilt image is hosted on NI’s official DockerHub account and is configured to allow anonymous pulls (no login required).
 
 Use the command:
@@ -57,6 +58,7 @@ ni/labview         2025q3-linux   abc123xyz...   2 days ago     3.2GB
 ```
 ## Running the image
 **_TODO:** Update links to the image on dockerhub once available.
+
 Once the image has been successfully pulled, run the following command to enter the container’s interactive shell:
 ```shell
     docker run -it <PlaceHolder for link>/labview:2025q3-linux
