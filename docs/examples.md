@@ -111,12 +111,27 @@ The action does the following:
 3. Mount the repository into the container
 4. Run the script `runlabview.sh` as container's entrypoint.
 
-The action is set to be triggered when any pull request is created, updated or reopened and contains changes in the VIs under `examples/integration-into-cicd/Test-VIs` are detected.
+The action is set to be triggered when any pull request is created, updated or reopened.
 
 ### Running the GitHub Action
 A testing Pull Request has been created that demonstrates the use of the script `runlabview.sh` and the GitHub Action to run LabVIEWCLI inside a container.
 
-Link to the Pull Request: 
+Link to the Pull Request: [Integration into CI/CD](https://github.com/ni/labview-for-containers/pull/5)
+
+- When a Pull Request is opened, a status check running the GitHub Action can be seen.
+    ![CICD-PullRequest](../examples/int-cicd.PNG)
+
+- If we navigate to the run logs by clicking on the Action, we can see what all jobs were executed as part of this pipeline.
+    ![Log](../examples/TopLevelLog.PNG)
+
+- Expanding the job shows the full log of that particular step.
+    ![CompLog](../examples/CompleteLog.PNG)
+
+The Complete run can be found [here.](https://github.com/ni/labview-for-containers/actions/runs/16333422879/job/46140796978?pr=5)
+
+___
+
+Feel free to tailor the workflow to your needs—add or remove jobs, adjust environment variables, or modify volume mounts. You can also use the provided YAML definitions as a springboard for your own CI/CD pipelines. This example is meant as a reference implementation to help you quickly integrate LabVIEWCLI commands into your automated workflows.
 
 
 
