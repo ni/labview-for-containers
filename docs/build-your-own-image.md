@@ -12,10 +12,8 @@ Before building your own image, make sure you have:
 - Docker Engine (v20.10+) installed and running
 - At least 4 GB of free disk space
 - A working internet connection (for downloading base images and packages)
-- Access to the official Dockerfile, located at:
-    ```shell
-        <repo-root>/examples/build-your-own-image/Dockerfile
-    ```
+- Access to the official Dockerfile, located at: [examples/build-your-own-image/Dockerfile](../examples/build-your-own-image/Dockerfile)
+  
 
 ## Important dependencies
 LabVIEW has strict system-level requirements that must be met in the container for it to run properly. These include:
