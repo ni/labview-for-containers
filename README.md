@@ -7,6 +7,8 @@ This project enables you to run LabVIEW seamlessly on Linux using Docker, making
 ## Overview
 With the release of LabVIEW 2025 Q3, we now officially support Linux containers to streamline CI/CD workflows. The base image is publicly available on DockerHub under the official National Instruments account as: `labview:2025q3-linux`
 
+**DockerHub Repository👉** [nationalinstruments/labview](https://hub.docker.com/r/nationalinstruments/labview)
+
 This README provides step-by-step guidance on:
 1. Accessing the image from DockerHub
 2. Running and deploying the container
