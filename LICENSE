@@ -1,1 +1,20 @@
-If you have acquired a development license, you may deploy and use LabVIEW software within Docker containers, virtual machines, or similar containerized environments (“Container Instances”) solely for continuous integration, continuous deployment (CI/CD), automated testing, automated validation, automated review, automated build processes, static code analysis, unit testing, executable generation, and report generation activities. You may create unlimited Container Instances and run unlimited concurrent Container Instances for these authorized automation purposes. It is hereby clarified that You may only host, distribute, and make available Container Instances containing LabVIEW software internally within your organization where such Container Instances are not made available to anyone outside your organization unless otherwise agreed under your license terms. Container Instances may be accessed by multiple users within your organization for the automation purposes specified in this paragraph, without requiring individual licenses for each user accessing the Container Instance. In no event may you use LabVIEW software within Container Instances for development purposes, including but not limited to creating, editing, or modifying LabVIEW code, with the exception of debugging automation processes as specifically permitted above. You may not distribute Container Instances containing LabVIEW software to third parties outside your organization without NI’s prior written consent.
+Copyright (c) 2022, National Instruments Corp.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
