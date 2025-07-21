@@ -7,7 +7,7 @@ This project enables you to run LabVIEW seamlessly on Linux using Docker, making
 ## Overview
 With the release of LabVIEW 2025 Q3, we now officially support Linux containers to streamline CI/CD workflows. The base image is publicly available on DockerHub under the official National Instruments account as: `labview:2025q3-linux`
 
-**DockerHub Repository👉** [nationalinstruments/labview](https://hub.docker.com/r/nationalinstruments/labview)
+**DockerHub Repository:** [nationalinstruments/labview](https://hub.docker.com/r/nationalinstruments/labview)
 
 This README provides step-by-step guidance on:
 1. Accessing the image from DockerHub
@@ -57,4 +57,6 @@ This [Example Guide](./docs/examples.md) contains information on example use cas
 See the FAQ section [here.](./docs/faqs.md)
 
 ## License
+If you have acquired a development license, you may deploy and use LabVIEW software within Docker containers, virtual machines, or similar containerized environments (“Container Instances”) solely for continuous integration, continuous deployment (CI/CD), automated testing, automated validation, automated review, automated build processes, static code analysis, unit testing, executable generation, and report generation activities. You may create unlimited Container Instances and run unlimited concurrent Container Instances for these authorized automation purposes. It is hereby clarified that You may only host, distribute, and make available Container Instances containing LabVIEW software internally within your organization where such Container Instances are not made available to anyone outside your organization unless otherwise agreed under your license terms. Container Instances may be accessed by multiple users within your organization for the automation purposes specified in this paragraph, without requiring individual licenses for each user accessing the Container Instance. In no event may you use LabVIEW software within Container Instances for development purposes, including but not limited to creating, editing, or modifying LabVIEW code, with the exception of debugging automation processes as specifically permitted above. You may not distribute Container Instances containing LabVIEW software to third parties outside your organization without NI’s prior written consent.
+
 See [LICENSE](./LICENSE)
