@@ -57,5 +57,5 @@ Please refer: [README](./README.md)
 
 (taken from [developercertificate.org](https://developercertificate.org/))
 
-See [LICENSE](https://github.com/ni/labview-for-containers/blob/main/LICENSE)
+See [LICENSE](https://github.com/ni/labview-for-containers?tab=readme-ov-file#license)
 for details about how `labview-for-containers` is licensed.
