@@ -37,7 +37,7 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 RUN mkdir -p /home/execs/
 
 # Copy LabVIEW Installer and CEIP Default settings.json
-COPY configuration/* /home/execs/
+COPY Installer/* /home/execs/
     
 ########################################################################################################################################################################################    
 # Install and Setup LabVIEW
