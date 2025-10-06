@@ -28,7 +28,9 @@ RUN apt-get update && \
     libglu1-mesa \
     libx11-6 \
     libxinerama1 \
-    xvfb
+    xvfb \
+    gcc \  # Needed for building Shared Libraries
+    g++    # Needed for building Shared Libraries
     
 # Fix permission issues for X11
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
