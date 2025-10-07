@@ -20,6 +20,7 @@ ENV EnableCICDFeaturesForLabVIEW=TRUE
 ENV USER=root
 
 # Install absolutely needed dependencies
+# gcc and g++ needed for building Shared Libraries
 RUN apt-get update && \
     apt-get install -y \
     ca-certificates \
@@ -29,8 +30,8 @@ RUN apt-get update && \
     libx11-6 \
     libxinerama1 \
     xvfb \
-    gcc \  # Needed for building Shared Libraries
-    g++    # Needed for building Shared Libraries
+    gcc \  
+    g++
     
 # Fix permission issues for X11
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
