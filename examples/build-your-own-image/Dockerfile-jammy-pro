@@ -30,8 +30,20 @@ RUN apt-get update && \
     libx11-6 \
     libxinerama1 \
     xvfb \
-    gcc \  
-    g++
+    gcc \
+    g++ \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm1 \
+    libxkbcommon0 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libatspi2.0-0 \
+    libnss3
     
 # Fix permission issues for X11
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
