@@ -1,0 +1,47 @@
+# Official Microsoft Windows Server Image
+FROM mcr.microsoft.com/windows/server:ltsc2022
+
+# -------------------------------
+# Handle LabVIEW year properly
+# -------------------------------
+# ARG is for build-time (can be overridden with --build-arg)
+# ENV makes it available inside RUN and in the container
+ARG LV_YEAR=2026
+ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.625-0+d625/offline
+ENV LV_YEAR=${LV_YEAR}
+ENV LV_FEED_LOCATION=${LV_FEED_LOCATION}
+
+# Configure PowerShell for automated LabVIEW installation
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
+
+# Make Directory for temporarily storing the installers
+RUN New-Item -ItemType Directory -Path 'C:\\ni\\resources' -Force
+
+# Copy NIPKG installer to the image
+COPY ["Resources/Windows Resources", "C:/ni/resources/"]
+
+# Install NIPKG Manager
+RUN Start-Process -wait C:\\ni\\resources\\install.exe -ArgumentList '--passive', '--accept-eulas', '--no-shortcuts', '--no-start-menu', '--no-desktop-icon', '--no-update-check', '--prevent-reboot'
+
+# Add NIPKG In Path
+RUN setx PATH \"%PATH%;C:\\Program Files\\National Instruments\\NI Package Manager\"
+
+
+# Install LabVIEW 2026 Q1
+# The following command uses '|| exit /b 0' to prevent build failure if the package is already installed or not found.
+SHELL ["cmd", "/S", "/C"]
+RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%
+RUN nipkg feed-info
+RUN nipkg feed-update
+RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
+RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
+RUN nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
+
+# Enable VI Server
+RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini"
+
+# Move back to PowerShell for further commands
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
+
+# Clean up installers directory
+RUN Remove-Item -Path 'C:\\ni\\resources' -Recurse -Force
