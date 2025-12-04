@@ -49,17 +49,17 @@ RUN apt-get update && \
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # Make directory for temporarily storing the LabVIEW installer
-RUN mkdir -p /home/execs/
+RUN mkdir -p /home/resources/
 
 # Copy LabVIEW Installer and CEIP Default settings.json
-COPY Installer/* /home/execs/
+COPY ["Resources/Linux Resources", "/home/resources/"]
     
 ########################################################################################################################################################################################    
 # Install and Setup LabVIEW
 ########################################################################################################################################################################################
 
 # Install LabVIEW Pro, LabVIEWCLI, CEIP and VI Analyzer Toolkit
-RUN apt-get install -y /home/execs/ni-labview-${LV_YEAR}.deb && \
+RUN apt-get install -y /home/resources/ni-labview-${LV_YEAR}.deb && \
     apt-get update && \
     apt-get install -y \
     ni-labview-${LV_YEAR}-pro \
@@ -80,7 +80,7 @@ RUN echo "unattended=True" >> /root/natinst/.config/LabVIEW-${LV_YEAR}/labviewpr
     echo "unattended=True" >> /root/natinst/.config/LabVIEW-${LV_YEAR}/labview64.conf
     
 # Enable CEIP Logging and Sending
-RUN mv -f /home/execs/settings.json /var/local/natinst/udc && \
+RUN mv -f /home/resources/settings.json /var/local/natinst/udc && \
     chmod 666 /var/local/natinst/udc/settings.json
 
 ########################################################################################################################################################################################
@@ -88,4 +88,4 @@ RUN mv -f /home/execs/settings.json /var/local/natinst/udc && \
 ########################################################################################################################################################################################
 
 # Remove installer and settings.json
-RUN rm -rf /home/execs/
+RUN rm -rf /home/resources/
