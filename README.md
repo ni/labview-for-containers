@@ -26,17 +26,17 @@ We offer two delivery options depending on your use case:
 1. **Prebuilt Images (Recommended for Most Users)**
     - Prebuilt images are available on DockerHub, which includes a ready-to-use LabVIEW installation.
     - **Image Name:** `labview:<release>-<platform>`
-    - See [LabVIEW Container Compatibility](./docs/compatibility.md) to get details on LabVIEW Versions with their supported Docker Containers and available images.
-    - Use this if you want a plug-and-play experience with minimal configuration.
+    - See [LabVIEW Container Compatibility](./docs/compatibility.md) to get details on LabVIEW Versions with their supported Docker Containers and list of available images.
+    - Use these images if you want a plug-and-play experience with minimal configuration.
 2. **Official Dockerfile (For Advanced Users)**
-    - For teams that require more control (e.g., adding custom tools, scripts, custom network settings), we provide an official Dockerfile to build your own image.
+    - For teams that require more control (e.g., adding custom tools, scripts, custom network settings), we provide an official Dockerfiles to build your own image.
     - Use this approach if you want to:
         - Integrate your own automation or test scripts
         - Install specific dependencies
         - Debug or modify the container setup
 
 ## Using the Prebuilt Image (Recommended for Most Users)
-Please see the [Using the Prebuilt Image](./docs/use-prebuilt-image.md) guide for full details.
+Please see the [Using Prebuilt Images](./docs/use-prebuilt-image.md) guide for full details.
 The documentation contains information about:
 1. Image Specifications
 2. Access the Docker Image
