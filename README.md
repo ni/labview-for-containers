@@ -26,7 +26,7 @@ We offer two delivery options depending on your use case:
 1. **Prebuilt Images (Recommended for Most Users)**
     - Prebuilt images are available on DockerHub, which includes a ready-to-use LabVIEW installation.
     - **Image Name:** `labview:<release>-<platform>`
-    - See [LabVIEW Container Compatibility](./docs/compatibility.md) to get details on LabVIEW Versions with their supported Docker Containers and list of available images.
+    - See [Releases](https://github.com/ni/labview-for-containers/releases) to get details on LabVIEW Versions with their supported Docker Containers and list of available images.
     - Use these images if you want a plug-and-play experience with minimal configuration.
 2. **Official Dockerfile (For Advanced Users)**
     - For teams that require more control (e.g., adding custom tools, scripts, custom network settings), we provide an official Dockerfiles to build your own image.
@@ -55,6 +55,22 @@ The Documentation contains information about:
 
 ## Example Usages
 This [Example Guide](./docs/examples.md) contains information on example use cases of LabVIEW Container Images. 
+
+## Releases & Changelog
+
+Official LabVIEW container images are released on Docker Hub and documented
+using GitHub Releases.
+
+**Release Notes:** : https://github.com/ni/labview-for-containers/releases
+
+Each GitHub Release corresponds to **one Docker image tag** published on Docker Hub.
+
+### Version Mapping
+| GitHub Release | Docker Image Tag |
+|---------------|------------------|
+| `v2025q3-linux`    | `nationalinstruments/labview:2025q3-linux` |
+| `v2025q3patch1-linux` | `nationalinstruments/labview:2025q3patch1-linux` |
+
 
 ## Frequently Asked Questions (FAQs)
 See the FAQ section [here.](./docs/faqs.md)
