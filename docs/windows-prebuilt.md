@@ -1,9 +1,22 @@
 # Windows Prebuilt Images
-## Overview
-### Base Image
-Prebuilt Images for Windows containers use `mcr.microsoft.com/windows/server:ltsc2022` as their base image. 
 
-Minimal Images like `servercore` lacks many important system level dependencies that are needed for running LabVIEW. This is the main reason of using the `server` image.
+## Overview
+These prebuilt images provide a ready-to-use LabVIEW environment for Windows containers, optimized for headless automation and CI/CD workflows.
+
+## Table of Contents
+- [Overview](#overview)
+    - [Base Image](#base-image)
+    - [Preinstalled Software Stack](#preinstalled-software-stack)
+    - [Intended Use](#intended-use)
+- [Accessing the image](#accessing-the-image)
+- [Running the image](#running-the-image)
+- [Important](#important)
+- [What's next](#whats-next)
+
+### Base Image
+Prebuilt images for Windows containers use `mcr.microsoft.com/windows/server:ltsc2022` as their base image. 
+
+Minimal images like `servercore` lack many important system-level dependencies that are needed for running LabVIEW. This is the main reason for using the `server` image.
 
 ### Preinstalled Software Stack
 The image comes with the following software pre-installed.
@@ -28,10 +41,10 @@ Use `LabVIEWCLI` as the primary interface for interacting with LabVIEW within th
 
 ## Accessing the image
 
-The prebuilt images are hosted on [NI’s official DockerHub](https://hub.docker.com/r/nationalinstruments/labview) account and is configured to allow anonymous pulls (no login required).
+The prebuilt images are hosted on [NI’s official Docker Hub](https://hub.docker.com/r/nationalinstruments/labview) account and are configured to allow anonymous pulls (no login required).
 
-**NOTE:** For pulling in Windows Docker Image, please make sure you have a Windows host with Docker installed and is configured for Windows Containers.
-To understand how to switch to windows containers on Docker follow [this](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#windows-10-and-windows-11-2) guide.
+**NOTE:** To pull a Windows Docker image, make sure you have a Windows host with Docker installed and configured for Windows containers.
+To understand how to switch to Windows containers in Docker, follow [this guide](https://learn.microsoft.com/en-us/virtualization/windowscontainers/quick-start/set-up-environment?tabs=dockerce#windows-10-and-windows-11-2).
 
 Use the command:
 ```shell
@@ -67,21 +80,21 @@ This will drop you into a shell inside the container.
 
 From here, you're ready to execute **LabVIEWCLI commands** to run VIs, perform builds, or run VI Analyzer tests.
 
-**NOTE:** LabVIEW Windows Container images can only run on a Windows Host.
+**NOTE:** LabVIEW Windows container images can only run on a Windows host.
 
 ---
 
 ## Important
-LabVIEW on windows containers require that **all LabVIEWCLI commands must end with -Headless** argument, which `enables LabVIEW to run completely headless (without UI) and without the need for ACTIVATION`.
+LabVIEW on Windows containers requires that **all LabVIEWCLI commands end with the `-Headless` argument**, which enables LabVIEW to run completely headless (without UI) and without the need for activation.
 
-If `-Headless` argument is NOT passed to LabVIEWCLI, LabVIEW would be launched in normal UI mode which can cause multiple issues in CI/CD Environments like:
-1. Activation Prompt blocking execution indefinitely.
-2. Other LabVIEW native popups could arise and block the execution indefinitely.
-3. Since accessing the UI of windows containers is not straight forward, any error popups that arise would also be not available and the execution could be blocked indefinitely.
+If the `-Headless` argument is NOT passed to LabVIEWCLI, LabVIEW will be launched in normal UI mode, which can cause multiple issues in CI/CD environments such as:
+1. Activation prompts blocking execution indefinitely.
+2. Other LabVIEW native popups blocking the execution indefinitely.
+3. Because accessing the UI of Windows containers is not straightforward, any error popups that arise are not visible and can block execution indefinitely.
 
 **NOTE:** The above is TRUE only for LabVIEW 2026 Q1 and onwards.
 
 ## What's next
-- [Windows Prebuilt Images](./windows-prebuilt.md)
+- [Linux Prebuilt Images](./linux-prebuilt.md)
 - [Headless LabVIEW](./headless-labview.md)
 - [Examples](./examples.md)

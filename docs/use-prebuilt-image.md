@@ -1,19 +1,31 @@
 # Using the Prebuilt Images (Recommended for Most Users)
-This guide provides instructions for using the prebuilt LabVIEW container images, publicly available on DockerHub.
+This guide provides instructions for using the prebuilt LabVIEW container images, publicly available on Docker Hub.
 
 Use this approach if you're looking for a plug-and-play experience with minimal configuration effort.
 
+## Table of Contents
+- [Image Specifications](#image-specifications)
+- [Examples](#examples)
+- [What's next](#whats-next)
+
 ## Image Specifications
 ### Image Name
-National Instrument's official LabVIEW Docker images follow the naming convention: `labview-<release>-<platform>` 
+National Instruments' official LabVIEW Docker images are published under the repository `nationalinstruments/labview` and follow the tag naming convention:
 
-For example: `labview:2026q1-windows`, `labview:2025q3patch1-linux`
+```text
+<release>-<platform>
+```
 
-The list of all official releases can be found here: [Releases](https://github.com/ni/labview-for-containers/releases)
+For example:
 
-**Link to all the available docker images is [here.](https://hub.docker.com/r/nationalinstruments/labview)**
+- `nationalinstruments/labview:2026q1-windows`
+- `nationalinstruments/labview:2025q3patch1-linux`
 
-For more information on windows and linux images, please follow the below readmes:
+The list of all official releases can be found here: [Releases](https://github.com/ni/labview-for-containers/releases).
+
+**Link to all available Docker images is [here.](https://hub.docker.com/r/nationalinstruments/labview)**
+
+For more information on Windows and Linux images, please follow the documents below:
 1. [Windows Prebuilt Images](./windows-prebuilt.md)
 2. [Linux Prebuilt Images](./linux-prebuilt.md)
 

@@ -1,9 +1,23 @@
 # Linux Prebuilt Images
-## Overview
-### Base Image
-Prebuilt Images for Linux containers use `ubuntu:22.04` as their base image. 
 
-While it may run on other Linux distributions base images (with Docker), we officially support and test only on Ubuntu 22.04 as the container base.
+## Overview
+These prebuilt images provide a ready-to-use LabVIEW environment for Linux containers, optimized for headless automation and CI/CD workflows.
+
+## Table of Contents
+- [Overview](#overview)
+    - [Base Image](#base-image)
+    - [Preinstalled Software Stack](#preinstalled-software-stack)
+    - [Intended Use](#intended-use)
+- [Accessing the image](#accessing-the-image)
+- [Running the image](#running-the-image)
+- [Customer Experience Improvement Program (CEIP)](#customer-experience-improvement-program-ceip)
+- [Important](#important)
+- [What's next](#whats-next)
+
+### Base Image
+Prebuilt images for Linux containers use `ubuntu:22.04` as their base image. 
+
+While it may also run on other Linux distribution base images (with Docker), we officially support and test only on Ubuntu 22.04 as the container base.
 
 ### Preinstalled Software Stack
 The image comes with the following software pre-installed.
@@ -28,7 +42,7 @@ Use `LabVIEWCLI` as the primary interface for interacting with LabVIEW within th
 
 ## Accessing the image
 
-The prebuilt image is hosted on [NI’s official DockerHub](https://hub.docker.com/r/nationalinstruments/labview) account and is configured to allow anonymous pulls (no login required).
+The prebuilt image is hosted on [NI’s official Docker Hub](https://hub.docker.com/r/nationalinstruments/labview) account and is configured to allow anonymous pulls (no login required).
 
 Use the command:
 ```shell
@@ -64,25 +78,25 @@ This will drop you into a Bash shell inside the container.
 
 From here, you're ready to execute **LabVIEWCLI commands** to run VIs, perform builds, or run VI Analyzer tests.
 
-**NOTE:** LabVIEW Linux Container images can run on any host machine i.e both windows and Linux.
+**NOTE:** LabVIEW Linux container images can run on any host OS that supports Docker and Linux containers (for example, Windows or Linux).
 
----
-**NOTE:** By default, the NI's Customer Experience Improvement Program (CEIP) is enabled on the image and we collect anonymous information about the use of NI products, your computer or device, and connected devices. NI uses the aggregate of this information to improve the products and features customers use most often and to help solve problems. We do not collect personal data or proprietary application information, and we do not sell usage information to third parties.
+## Customer Experience Improvement Program (CEIP)
 
-For more information on NI's Customer Experience Improvement Program please see this: [NI Customer Experience Improvement Program](https://www.ni.com/en/about-ni/legal/ceip.html?srsltid=AfmBOorZGikj9CSWmeYxwtWemmv_Byhk3ew3YcSwNaRmAhkIBtCzXWmF)
+By default, NI's Customer Experience Improvement Program (CEIP) is enabled on the image and NI collects anonymous information about the use of NI products, your computer or device, and connected devices. NI uses the aggregate of this information to improve the products and features customers use most often and to help solve problems. NI does not collect personal data or proprietary application information, and NI does not sell usage information to third parties.
 
-To **enable/disable the collection of CEIP Data**, execute this command once inside the container shell:
+For more information on NI's Customer Experience Improvement Program please see: [NI Customer Experience Improvement Program](https://www.ni.com/en/about-ni/legal/ceip.html).
+
+To **enable or disable the collection of CEIP data**, execute this command once inside the container shell:
 ```bash
 LabVIEWCLI -OperationName RunVI -VIPath /usr/local/natinst/share/nilvcli/supportVIs/ToggleCEIP.vi <ON/OFF> -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labview
 ```
-Add `-Headless` at the end of LabVIEWCLI command for LabVIEW 2026 Q1 and onwards.
 
 ## Important
-LabVIEW 2026 Q1 and onwards support Headless LabVIEW run mode which is a replacement for the Environment variable toggle `EnableCICDFeaturesForLabVIEW=TRUE`.
+LabVIEW 2026 Q1 and onwards support Headless LabVIEW run mode, which is a replacement for the environment variable toggle `EnableCICDFeaturesForLabVIEW=TRUE`.
 
-To enable CI/CD Features in LabVIEW and run it on Linux Containers, **all LabVIEWCLI commands must end with -Headless** argument, which enable LabVIEW to run completely headless.
+To enable CI/CD features in LabVIEW and run it on Linux containers, **all LabVIEWCLI commands must end with the `-Headless` argument**, which enables LabVIEW to run completely headless.
 
-If `-Headless` argument is NOT passed to LabVIEWCLI, it can cause compatibility issues on Docker Images. `-Headless` argument is neccessary to satisfy all requirements to run LabVIEW on Linux Containers.
+If the `-Headless` argument is NOT passed to LabVIEWCLI, it can cause compatibility issues on Docker images. The `-Headless` argument is necessary to satisfy all requirements to run LabVIEW on Linux containers.
 
 **NOTE:** The above is TRUE only for LabVIEW 2026 Q1 and onwards. For older images using LabVIEW 2025 Q3, continue using the environment variable `EnableCICDFeaturesForLabVIEW=TRUE`.
 
