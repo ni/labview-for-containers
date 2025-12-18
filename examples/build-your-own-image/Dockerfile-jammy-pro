@@ -89,3 +89,6 @@ RUN mv -f /home/resources/settings.json /var/local/natinst/udc && \
 
 # Remove installer and settings.json
 RUN rm -rf /home/resources/
+
+# Remove internal feeds
+RUN rm -f /etc/apt/sources.list.d/*labview*internal*.list
