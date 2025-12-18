@@ -37,6 +37,10 @@ RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
 RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
 RUN nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
 
+# Remove Internal Feeds
+RUN nipkg feed-remove LV%LV_YEAR%
+RUN nipkg feed-update
+
 # Enable VI Server
 RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini"
 
