@@ -1,6 +1,7 @@
 # Linux Prebuilt Images
+## Overview
 ### Base Image
-This Prebuilt Images for Linux containers use `ubuntu:22.04` as its base image. 
+Prebuilt Images for Linux containers use `ubuntu:22.04` as their base image. 
 
 While it may run on other Linux distributions base images (with Docker), we officially support and test only on Ubuntu 22.04 as the container base.
 
@@ -27,7 +28,7 @@ Use `LabVIEWCLI` as the primary interface for interacting with LabVIEW within th
 
 ## Accessing the image
 
-The prebuilt image is hosted on NI’s official DockerHub account and is configured to allow anonymous pulls (no login required).
+The prebuilt image is hosted on [NI’s official DockerHub](https://hub.docker.com/r/nationalinstruments/labview) account and is configured to allow anonymous pulls (no login required).
 
 Use the command:
 ```shell
@@ -63,6 +64,8 @@ This will drop you into a Bash shell inside the container.
 
 From here, you're ready to execute **LabVIEWCLI commands** to run VIs, perform builds, or run VI Analyzer tests.
 
+**NOTE:** LabVIEW Linux Container images can run on any host machine i.e both windows and Linux.
+
 ---
 **NOTE:** By default, the NI's Customer Experience Improvement Program (CEIP) is enabled on the image and we collect anonymous information about the use of NI products, your computer or device, and connected devices. NI uses the aggregate of this information to improve the products and features customers use most often and to help solve problems. We do not collect personal data or proprietary application information, and we do not sell usage information to third parties.
 
@@ -79,7 +82,7 @@ LabVIEW 2026 Q1 and onwards support Headless LabVIEW run mode which is a replace
 
 To enable CI/CD Features in LabVIEW and run it on Linux Containers, **all LabVIEWCLI commands must end with -Headless** argument, which enable LabVIEW to run completely headless.
 
-If `-Headless` argument is passed to LabVIEWCLI, it can cause compatibility issues on Docker Images. `-Headless` argument is neccessary to satisfy all requirements to run LabVIEW on Linux Containers.
+If `-Headless` argument is NOT passed to LabVIEWCLI, it can cause compatibility issues on Docker Images. `-Headless` argument is neccessary to satisfy all requirements to run LabVIEW on Linux Containers.
 
 **NOTE:** The above is TRUE only for LabVIEW 2026 Q1 and onwards. For older images using LabVIEW 2025 Q3, continue using the environment variable `EnableCICDFeaturesForLabVIEW=TRUE`.
 
