@@ -1,14 +1,13 @@
 # Linux Prebuilt Images
-
 ### Base Image
-This Prebuilt Image uses `ubuntu:22.04` as its base image. 
+This Prebuilt Images for Linux containers use `ubuntu:22.04` as its base image. 
 
 While it may run on other Linux distributions base images (with Docker), we officially support and test only on Ubuntu 22.04 as the container base.
 
 ### Preinstalled Software Stack
 The image comes with the following software pre-installed.
-1. LabVIEW Professional 2025 Q3
-2. LabVIEW RunTime Engine 2025 Q3
+1. LabVIEW Professional
+2. LabVIEW RunTime Engine
 3. LabVIEW Command Line Interface (LabVIEWCLI)
 4. VI Analyzer Toolkit
 5. X Virtual Frame Buffer (Xvfb)
@@ -73,3 +72,18 @@ To **enable/disable the collection of CEIP Data**, execute this command once ins
 ```bash
 LabVIEWCLI -OperationName RunVI -VIPath /usr/local/natinst/share/nilvcli/supportVIs/ToggleCEIP.vi <ON/OFF> -LabVIEWPath /usr/local/natinst/LabVIEW-2025-64/labview
 ```
+Add `-Headless` at the end of LabVIEWCLI command for LabVIEW 2026 Q1 and onwards.
+
+## Important
+LabVIEW 2026 Q1 and onwards support Headless LabVIEW run mode which is a replacement for the Environment variable toggle `EnableCICDFeaturesForLabVIEW=TRUE`.
+
+To enable CI/CD Features in LabVIEW and run it on Linux Containers, **all LabVIEWCLI commands must end with -Headless** argument, which enable LabVIEW to run completely headless.
+
+If `-Headless` argument is passed to LabVIEWCLI, it can cause compatibility issues on Docker Images. `-Headless` argument is neccessary to satisfy all requirements to run LabVIEW on Linux Containers.
+
+**NOTE:** The above is TRUE only for LabVIEW 2026 Q1 and onwards. For older images using LabVIEW 2025 Q3, continue using the environment variable `EnableCICDFeaturesForLabVIEW=TRUE`.
+
+## What's next
+- [Windows Prebuilt Images](./windows-prebuilt.md)
+- [Headless LabVIEW](./headless-labview.md)
+- [Examples](./examples.md)
