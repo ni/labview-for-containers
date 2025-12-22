@@ -60,6 +60,7 @@ The Windows Dockerfile at `examples/build-your-own-image/Dockerfile-windows` per
    ```
    - Creates a temporary folder for installers.
    - Copies Windows installer resources from `Resources/Windows Resources` into the image (for example, NI Package Manager bootstrapper and LabVIEW.ini template).
+   - **You would have to place the NI Package Manager installer and name it as install.exe under `Resources/Windows Resources`.**
 
 4. **Install NI Package Manager (NIPKG)**
    ```dockerfile
