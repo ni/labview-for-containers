@@ -207,3 +207,9 @@ LabVIEW does not allow simultaneous execution of headless and normal (IDE) insta
 
 This behavior helps keep automation runs and interactive development sessions isolated and avoids unexpected contention between modes.
 
+## What's next
+
+- Learn how headless mode is used in Linux images: [Linux Prebuilt Images](./linux-prebuilt.md)
+- See how Windows containers rely on `-Headless`: [Windows Prebuilt Images](./windows-prebuilt.md)
+- Build your own images that take advantage of headless mode: [Building Your Own LabVIEW Container Images](./build-your-own-image.md)
+
