@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 CONFIG_FILE='/workspace/examples/integration-into-cicd/Test-VIs/viaPassCase.viancfg'
 LV_YEAR="${LV_YEAR:-2026}"
 LABVIEW_PATH="/usr/local/natinst/LabVIEW-${LV_YEAR}-64/labviewprofull"
