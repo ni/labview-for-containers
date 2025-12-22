@@ -11,16 +11,29 @@ jobs:
   run-labview-cli:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Pull Docker Image from Docker Hub
-        run: docker pull nationalinstruments/labview:latest-linux
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_UNAME }}
+          password: ${{ secrets.GHCR_PAT }}
 
-      - name: Run LabVIEWCLI Operations
+      - name: Pull LabVIEW container image
+        run: docker pull ghcr.io/shivacode-2/labview:2026q1-linux-beta
+
+      - name: Run LabVIEWCLI MassCompile on Arrays
+        run: |
+          docker run --rm \
+            ghcr.io/shivacode-2/labview:2026q1-linux-beta \
+            bash -c "LabVIEWCLI -OperationName MassCompile -DirectoryToCompile /usr/local/natinst/LabVIEW-2026-64/examples/Arrays -LabVIEWPath /usr/local/natinst/LabVIEW-2026-64/labview -Headless"
+
+      - name: Run CI integration script in container
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
-            nationalinstruments/labview:latest-linux \
+            ghcr.io/shivacode-2/labview:2026q1-linux-beta \
             bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
 

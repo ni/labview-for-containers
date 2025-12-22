@@ -1,6 +1,9 @@
 #!/bin/bash
+set -e
+
 CONFIG_FILE='/workspace/examples/integration-into-cicd/Test-VIs/viaPassCase.viancfg'
-LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
+LV_YEAR="${LV_YEAR:-2026}"
+LABVIEW_PATH="/usr/local/natinst/LabVIEW-${LV_YEAR}-64/labviewprofull"
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 MASSCOMPILE_DIR='/workspace/examples/integration-into-cicd/Test-VIs'
 
@@ -17,7 +20,8 @@ echo "DirectorytoCompile: $MASSCOMPILE_DIR"
 LabVIEWCLI -LogToConsole TRUE \
 -OperationName MassCompile \
 -DirectoryToCompile $MASSCOMPILE_DIR \
--LabVIEWPath $LABVIEW_PATH
+-LabVIEWPath $LABVIEW_PATH \
+-Headless
 
 echo " "
 echo "Done Running Masscompile Operation"
@@ -34,7 +38,8 @@ LabVIEWCLI -LogToConsole TRUE \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
 -ReportPath $REPORT_PATH \
--LabVIEWPath $LABVIEW_PATH
+-LabVIEWPath $LABVIEW_PATH \
+-Headless
 
 echo "Done running of VI Analyzer Tests"
 echo "Printing Results..."
