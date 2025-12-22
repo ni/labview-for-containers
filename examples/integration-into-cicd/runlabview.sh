@@ -1,6 +1,7 @@
 #!/bin/bash
 CONFIG_FILE='/workspace/examples/integration-into-cicd/Test-VIs/viaPassCase.viancfg'
-LABVIEW_PATH='/usr/local/natinst/LabVIEW-2025-64/labviewprofull'
+LV_YEAR="${LV_YEAR:-2026}"
+LABVIEW_PATH="/usr/local/natinst/LabVIEW-${LV_YEAR}-64/labviewprofull"
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 MASSCOMPILE_DIR='/workspace/examples/integration-into-cicd/Test-VIs'
 
