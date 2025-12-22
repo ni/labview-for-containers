@@ -17,7 +17,8 @@ echo "DirectorytoCompile: $MASSCOMPILE_DIR"
 LabVIEWCLI -LogToConsole TRUE \
 -OperationName MassCompile \
 -DirectoryToCompile $MASSCOMPILE_DIR \
--LabVIEWPath $LABVIEW_PATH
+-LabVIEWPath $LABVIEW_PATH \
+-Headless
 
 echo " "
 echo "Done Running Masscompile Operation"
@@ -34,7 +35,8 @@ LabVIEWCLI -LogToConsole TRUE \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
 -ReportPath $REPORT_PATH \
--LabVIEWPath $LABVIEW_PATH
+-LabVIEWPath $LABVIEW_PATH \
+-Headless
 
 echo "Done running of VI Analyzer Tests"
 echo "Printing Results..."
