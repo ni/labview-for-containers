@@ -31,7 +31,6 @@ RUN setx PATH \"%PATH%;C:\\Program Files\\National Instruments\\NI Package Manag
 # The following command uses '|| exit /b 0' to prevent build failure if the package is already installed or not found.
 SHELL ["cmd", "/S", "/C"]
 RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%
-RUN nipkg feed-info
 RUN nipkg feed-update
 RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
 RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
