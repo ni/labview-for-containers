@@ -13,20 +13,20 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Pull Docker Image from Docker Hub
+      - name: Pull LabVIEW container image
         run: docker pull nationalinstruments/labview:2026q1-windows-beta
 
-      - name: Run LabVIEWCLI MassCompile in Windows container
+      - name: Run LabVIEWCLI MassCompile on Arrays
         run: >
           docker run --rm
           nationalinstruments/labview:2026q1-windows-beta
           LabVIEWCLI -OperationName MassCompile -DirectoryToCompile
           "C:\Program Files\National Instruments\LabVIEW 2026\examples\Arrays" -Headless
 
-      - name: Run CI integration script in Windows container
+      - name: Run CI integration script in container
         run: >
           docker run --rm
           -v "${{ github.workspace }}:C:\workspace"
