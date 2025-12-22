@@ -9,18 +9,17 @@ on:
 
 jobs:
   run-labview-cli:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Pull Docker Image from Docker Hub
-        run: docker pull nationalinstruments/labview:latest-linux
+        run: docker pull nationalinstruments/labview:2026q1-windows-beta
 
       - name: Run LabVIEWCLI Operations
         run: |
-          docker run --rm \
-            -v "${{ github.workspace }}:/workspace" \
-            nationalinstruments/labview:latest-linux \
-            bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
+          docker run --rm ^
+            nationalinstruments/labview:2026q1-windows-beta ^
+            cmd /c "LabVIEWCLI -OperationName MassCompile -Help -Headless"
 
