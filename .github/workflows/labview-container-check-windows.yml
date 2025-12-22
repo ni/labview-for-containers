@@ -25,3 +25,10 @@ jobs:
           nationalinstruments/labview:2026q1-windows-beta
           LabVIEWCLI -OperationName MassCompile -DirectoryToCompile
           "C:\Program Files\National Instruments\LabVIEW 2026\examples\Arrays" -Headless
+
+      - name: Run CI integration script in Windows container
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:C:\workspace"
+          nationalinstruments/labview:2026q1-windows-beta
+          powershell -File "C:\workspace\examples\integration-into-cicd\runlabview.ps1" -WorkspaceRoot "C:\workspace"
