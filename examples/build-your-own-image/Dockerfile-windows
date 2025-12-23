@@ -48,12 +48,6 @@ RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION% && \
     nipkg feed-update && \
     rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
 
-# Enable VI Server
-RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini"
-
-# Move back to PowerShell for further commands
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; \
-      $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
-
-# Clean up installers directory
-RUN Remove-Item -Path 'C:\\ni\\resources' -Recurse -Force
+# Enable VI Server and cleaup resources folder
+RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
+    rmdir /S /Q "C:\ni\resources"
