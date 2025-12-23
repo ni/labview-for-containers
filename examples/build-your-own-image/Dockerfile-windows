@@ -33,7 +33,9 @@ SHELL ["cmd", "/S", "/C"]
 RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%
 RUN nipkg feed-update
 RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
-RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
+RUN nipkg install --accept-eulas -y ni-ceip || exit /b 0
+RUN nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en || exit /b 0
+RUN nipkg install --accept-eulas -y ni-viawin-labview-support || exit /b 0
 RUN nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
 
 # Remove Internal Feeds
