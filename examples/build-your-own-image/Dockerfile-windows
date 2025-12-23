@@ -45,8 +45,8 @@ RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION% && \
     nipkg install --accept-eulas -y ni-viawin-labview-support ni-labview-command-line-interface-x86 && \
     nipkg feed-remove LV%LV_YEAR% && \
     nipkg feed-update && \
-    rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages" || echo "cleanup failed (ignored)" && \
-    exit /b 0
+    rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
+
 # Enable VI Server and cleaup resources folder
 RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
     rmdir /S /Q "C:\ni\resources"
