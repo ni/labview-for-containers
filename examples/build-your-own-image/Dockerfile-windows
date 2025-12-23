@@ -34,18 +34,17 @@ RUN Start-Process -wait C:\\ni\\resources\\install.exe -ArgumentList '--passive'
 RUN setx PATH \"%PATH%;C:\\Program Files\\National Instruments\\NI Package Manager\"
 
 
-# Install LabVIEW 2026 Q1
+# Install LabVIEW, LabVIEWCLI, and VIA Support using NIPKG
 # The following command uses '|| exit /b 0' to prevent build failure if the package is already installed or not found.
+# Install from feed, then remove internal feeds and cleanup packages cache to reduce image size
 SHELL ["cmd", "/S", "/C"]
 RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION% && \
-    nipkg feed-update
-RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0 && \
+    nipkg feed-update && \
+    nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0 && \
     nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en || exit /b 0 && \
     nipkg install --accept-eulas -y ni-viawin-labview-support || exit /b 0 && \
-    nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
-
-# Remove Internal Feeds and nipkg downloaded packages
-RUN nipkg feed-remove LV%LV_YEAR% && \
+    nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0 && \
+    nipkg feed-remove LV%LV_YEAR% && \
     nipkg feed-update && \
     rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
 
