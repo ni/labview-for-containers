@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/windows/server:ltsc2022
 # ARG is for build-time (can be overridden with --build-arg)
 # ENV makes it available inside RUN and in the container
 ARG LV_YEAR=2026
-ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.727-0+d727/offline
+ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.728-0+d728/offline
 ENV LV_YEAR=${LV_YEAR}
 ENV LV_FEED_LOCATION=${LV_FEED_LOCATION}
 
@@ -38,15 +38,17 @@ RUN setx PATH \"%PATH%;C:\\Program Files\\National Instruments\\NI Package Manag
 # The following command uses '|| exit /b 0' to prevent build failure if the package is already installed or not found.
 # Install from feed, then remove internal feeds and cleanup packages cache to reduce image size
 SHELL ["cmd", "/S", "/C"]
-RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION% && \
-    nipkg feed-update && \
-    nipkg install --accept-eulas -y ni-offline-help-viewer        || echo "ni-offline-help-viewer failed (ignored)" && \
-    nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en  || echo "ni-labview-core failed (ignored)" && \
-    nipkg install --accept-eulas -y ni-viawin-labview-support ni-labview-command-line-interface-x86 && \
-    nipkg feed-remove LV%LV_YEAR% && \
-    nipkg feed-update && \
+RUN (nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%) && \
+    (nipkg feed-update) && \
+    (nipkg install --accept-eulas -y ni-offline-help-viewer        || echo "ni-offline-help-viewer failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en  || echo "ni-labview-core failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-viawin-labview-support     || echo "ni-viawin-labview-support failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-labview-command-line-interface-x86  || echo "ni-labview-command-line-interface-x86 failed (ignored)") && \
+    (nipkg feed-remove LV%LV_YEAR%) && \
+    (nipkg feed-update) && \
     rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
 
 # Enable VI Server and cleaup resources folder
 RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
+    move C:\\ni\\resources\\LabVIEWCLI.ini "C:\\Program Files (x86)\\National Instruments\\Shared\\LabVIEW CLI\\LabVIEWCLI.ini" && \
     rmdir /S /Q "C:\ni\resources"
