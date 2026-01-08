@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/windows/server:ltsc2022
 # ARG is for build-time (can be overridden with --build-arg)
 # ENV makes it available inside RUN and in the container
 ARG LV_YEAR=2026
-ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.728-0+d728/offline
+ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.738-0+d738/offline
 ENV LV_YEAR=${LV_YEAR}
 ENV LV_FEED_LOCATION=${LV_FEED_LOCATION}
 

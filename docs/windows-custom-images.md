@@ -39,7 +39,7 @@ The Windows Dockerfile at `examples/build-your-own-image/Dockerfile-windows` per
    FROM mcr.microsoft.com/windows/server:ltsc2022
 
    ARG LV_YEAR=2026
-   ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.625-0+d625/offline
+   ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.738-0+d738/offline
    ENV LV_YEAR=${LV_YEAR}
    ENV LV_FEED_LOCATION=${LV_FEED_LOCATION}
    ```
@@ -77,35 +77,39 @@ The Windows Dockerfile at `examples/build-your-own-image/Dockerfile-windows` per
 6. **Install LabVIEW and Tooling Using NIPKG**
    ```dockerfile
    SHELL ["cmd", "/S", "/C"]
-   RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%
-   RUN nipkg feed-info
-   RUN nipkg feed-update
-   RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
-   RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
-   RUN nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
+   RUN (nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%) && \
+       (nipkg feed-update) && \
+       (nipkg install --accept-eulas -y ni-offline-help-viewer        || echo "ni-offline-help-viewer failed (ignored)") && \
+       (nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en  || echo "ni-labview-core failed (ignored)") && \
+       (nipkg install --accept-eulas -y ni-viawin-labview-support     || echo "ni-viawin-labview-support failed (ignored)") && \
+       (nipkg install --accept-eulas -y ni-labview-command-line-interface-x86  || echo "ni-labview-command-line-interface-x86 failed (ignored)") && \
+       (nipkg feed-remove LV%LV_YEAR%) && \
+       (nipkg feed-update) && \
+       rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
    ```
    - Switches to `cmd` for compatibility with `nipkg` commands.
-   - Adds the LabVIEW feed, updates feeds, and installs:
-     - NI offline help viewer
-     - CEIP, LabVIEW core, VI Analyzer support
-     - LabVIEW Command Line Interface (x86)
-   - Uses `|| exit /b 0` to avoid failing the build if a package runs into issues while installing.
+   - Combines all package management operations into a single RUN command:
+     - Adds the LabVIEW feed to the local NIPKG repository
+     - Updates feed information
+     - Installs NI offline help viewer
+     - Installs LabVIEW core, VI Analyzer support
+     - Installs LabVIEW Command Line Interface (x86)
+     - Removes the temporary feed configuration
+     - Updates feeds again to clean up
+     - Removes the NI Package Manager packages cache to reduce image size
+   - Uses `|| echo "...failed (ignored)"` to log issues but continue if a package fails to install (helpful for optional packages).
 
-7. **Remove Internal Feeds and Enable VI Server**
+7. **Configure VI Server and Cleanup Resources**
    ```dockerfile
-   RUN nipkg feed-remove LV%LV_YEAR%
-   RUN nipkg feed-update
-   RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini"
+   RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
+       move C:\\ni\\resources\\LabVIEWCLI.ini "C:\\Program Files (x86)\\National Instruments\\Shared\\LabVIEW CLI\\LabVIEWCLI.ini" && \
+       rmdir /S /Q "C:\ni\resources"
    ```
-   - Removes the temporary feed configuration.
    - Moves a preconfigured `LabVIEW.ini` into the LabVIEW installation directory to enable VI Server and other required INI tokens.
+   - Moves `LabVIEWCLI.ini` into the LabVIEW CLI installation directory for proper CLI configuration.
+   - Removes the entire temporary resources folder (`C:\ni\resources`) to keep the image smaller and cleaner.
 
-8. **Cleanup**
-   ```dockerfile
-   SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
-   RUN Remove-Item -Path 'C:\\ni\\resources' -Recurse -Force
-   ```
-   - Switches back to PowerShell and removes installer resources to keep the image smaller and cleaner.
+
 
 ## How to Build the Image
 
