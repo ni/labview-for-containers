@@ -7,12 +7,13 @@ FROM mcr.microsoft.com/windows/server:ltsc2022
 # ARG is for build-time (can be overridden with --build-arg)
 # ENV makes it available inside RUN and in the container
 ARG LV_YEAR=2026
-ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.625-0+d625/offline
+ARG LV_FEED_LOCATION=http://argohttp.natinst.com/ni/nipkg/feeds/ni-l/ni-labview-2026/26.1.0/26.1.0.738-0+d738/offline
 ENV LV_YEAR=${LV_YEAR}
 ENV LV_FEED_LOCATION=${LV_FEED_LOCATION}
 
 # Configure PowerShell for automated LabVIEW installation
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; \
+      $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
 
 # Make Directory for temporarily storing the installers
 RUN New-Item -ItemType Directory -Path 'C:\\ni\\resources' -Force
@@ -21,31 +22,33 @@ RUN New-Item -ItemType Directory -Path 'C:\\ni\\resources' -Force
 COPY ["Resources/Windows Resources", "C:/ni/resources/"]
 
 # Install NIPKG Manager
-RUN Start-Process -wait C:\\ni\\resources\\install.exe -ArgumentList '--passive', '--accept-eulas', '--no-shortcuts', '--no-start-menu', '--no-desktop-icon', '--no-update-check', '--prevent-reboot'
+RUN Start-Process -wait C:\\ni\\resources\\install.exe -ArgumentList '--passive', \
+    '--accept-eulas',    \
+    '--no-shortcuts',    \
+    '--no-start-menu',   \
+    '--no-desktop-icon', \
+    '--no-update-check', \
+    '--prevent-reboot'
 
 # Add NIPKG In Path
 RUN setx PATH \"%PATH%;C:\\Program Files\\National Instruments\\NI Package Manager\"
 
 
-# Install LabVIEW 2026 Q1
+# Install LabVIEW, LabVIEWCLI, and VIA Support using NIPKG
 # The following command uses '|| exit /b 0' to prevent build failure if the package is already installed or not found.
+# Install from feed, then remove internal feeds and cleanup packages cache to reduce image size
 SHELL ["cmd", "/S", "/C"]
-RUN nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%
-RUN nipkg feed-info
-RUN nipkg feed-update
-RUN nipkg install --accept-eulas -y ni-offline-help-viewer || exit /b 0
-RUN nipkg install --accept-eulas -y ni-ceip ni-labview-%LV_YEAR%-core-en ni-viawin-labview-support || exit /b 0
-RUN nipkg install --accept-eulas -y ni-labview-command-line-interface-x86 || exit /b 0
+RUN (nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%) && \
+    (nipkg feed-update) && \
+    (nipkg install --accept-eulas -y ni-offline-help-viewer        || echo "ni-offline-help-viewer failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-labview-%LV_YEAR%-core-en  || echo "ni-labview-core failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-viawin-labview-support     || echo "ni-viawin-labview-support failed (ignored)") && \
+    (nipkg install --accept-eulas -y ni-labview-command-line-interface-x86  || echo "ni-labview-command-line-interface-x86 failed (ignored)") && \
+    (nipkg feed-remove LV%LV_YEAR%) && \
+    (nipkg feed-update) && \
+    rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
 
-# Remove Internal Feeds
-RUN nipkg feed-remove LV%LV_YEAR%
-RUN nipkg feed-update
-
-# Enable VI Server
-RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini"
-
-# Move back to PowerShell for further commands
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Continue'; $ProgressPreference = 'SilentlyContinue'; $ConfirmPreference = 'None'; $VerbosePreference = 'Continue'; $WarningPreference = 'Continue';"]
-
-# Clean up installers directory
-RUN Remove-Item -Path 'C:\\ni\\resources' -Recurse -Force
+# Enable VI Server and cleaup resources folder
+RUN move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
+    move C:\\ni\\resources\\LabVIEWCLI.ini "C:\\Program Files (x86)\\National Instruments\\Shared\\LabVIEW CLI\\LabVIEWCLI.ini" && \
+    rmdir /S /Q "C:\ni\resources"
