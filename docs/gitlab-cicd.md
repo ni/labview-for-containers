@@ -16,6 +16,10 @@ The example YAML definitions mirror the [GitHub Actions workflows](https://githu
 > **Tip:** If you need both Linux and Windows jobs in a single pipeline, merge both
 > YAML files into one `.gitlab-ci.yml`.
 
+### Example Run
+
+See a live pipeline run here: [Linux pipeline on GitLab](https://gitlab.com/shivaCode-2/labview-for-containers/-/pipelines/2323995774)
+
 ---
 
 ## Prerequisites

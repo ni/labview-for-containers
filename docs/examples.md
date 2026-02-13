@@ -105,6 +105,9 @@ To use them:
 1. Copy the appropriate YAML file to the root of your GitLab repository and rename it to `.gitlab-ci.yml`.
 2. Push the change — GitLab will pick up the pipeline automatically on the next merge request.
 
+Example run:
+- [Linux pipeline run on GitLab](https://gitlab.com/shivaCode-2/labview-for-containers/-/pipelines/2323995774)
+
 For full details, see the [GitLab CI/CD Integration guide](./gitlab-cicd.md).
 
 
