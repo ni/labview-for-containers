@@ -1,0 +1,45 @@
+# GitLab CI/CD Pipeline — Run LabVIEWCLI on Linux Container
+#
+# This is an example pipeline definition equivalent to the GitHub Actions
+# workflow at .github/workflows/labview-container-check.yml
+#
+# Usage:
+#   Copy this file to the root of your GitLab repository as .gitlab-ci.yml
+#   (or include it via the `include` keyword).
+#
+# Prerequisites:
+#   - A GitLab Runner with Docker executor (Linux)
+#   - Access to Docker Hub (or your own registry) for the LabVIEW image
+
+stages:
+  - validation
+
+run-labview-cli-linux:
+  stage: validation
+  image: docker:24
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+    LABVIEW_IMAGE: "nationalinstruments/labview:latest-linux"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  before_script:
+    - docker pull "$LABVIEW_IMAGE"
+  script:
+    # 1. Run LabVIEWCLI MassCompile on Arrays examples
+    - >
+      docker run --rm
+      "$LABVIEW_IMAGE"
+      bash -c "LabVIEWCLI
+      -OperationName MassCompile
+      -DirectoryToCompile /usr/local/natinst/LabVIEW-2026-64/examples/Arrays
+      -LabVIEWPath /usr/local/natinst/LabVIEW-2026-64/labview
+      -Headless"
+
+    # 2. Run CI integration script in container (mount repo into /workspace)
+    - >
+      docker run --rm
+      -v "$CI_PROJECT_DIR:/workspace"
+      "$LABVIEW_IMAGE"
+      bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
