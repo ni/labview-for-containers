@@ -12,10 +12,10 @@
 #   - Access to Docker Hub (or your own registry) for the LabVIEW image
 
 stages:
-  - test
+  - validation
 
 run-labview-cli-linux:
-  stage: test
+  stage: validation
   image: docker:24
   services:
     - docker:24-dind

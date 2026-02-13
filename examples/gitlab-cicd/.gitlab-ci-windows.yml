@@ -14,10 +14,10 @@
 #   - Access to Docker Hub (or your own registry) for the LabVIEW image
 
 stages:
-  - test
+  - validation
 
 run-labview-cli-windows:
-  stage: test
+  stage: validation
   tags:
     - windows
     - docker

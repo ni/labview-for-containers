@@ -8,13 +8,13 @@
 # inside LabVIEW container images from Docker Hub.
 
 stages:
-  - test
+  - validation
 
 # ──────────────────────────────────────────────
 #  Linux Job
 # ──────────────────────────────────────────────
 run-labview-cli-linux:
-  stage: test
+  stage: validation
   image: docker:24
   services:
     - docker:24-dind
@@ -47,7 +47,7 @@ run-labview-cli-linux:
 #  Windows Job (requires a self-hosted Windows runner — see docs/gitlab-cicd.md)
 # ──────────────────────────────────────────────
 run-labview-cli-windows:
-  stage: test
+  stage: validation
   tags:
     - windows
     - docker
