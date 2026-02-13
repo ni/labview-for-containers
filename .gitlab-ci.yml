@@ -44,7 +44,7 @@ run-labview-cli-linux:
       bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
 
 # ──────────────────────────────────────────────
-#  Windows Job
+#  Windows Job (requires a self-hosted Windows runner — see docs/gitlab-cicd.md)
 # ──────────────────────────────────────────────
 run-labview-cli-windows:
   stage: test
@@ -55,6 +55,8 @@ run-labview-cli-windows:
     LABVIEW_IMAGE: "nationalinstruments/labview:latest-windows"
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
+      allow_failure: true
   before_script:
     - docker pull "$LABVIEW_IMAGE"
   script:
