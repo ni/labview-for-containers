@@ -3,6 +3,9 @@ Please find the old examples for Linux Containers with LabVIEW 2025 Q3 [here](./
 
 The following examples are for **LabVIEW 2026 Q1** supporting **both Linux and Windows containers** along with the introduction of **Headless Run Mode**
 
+## Setup your system for windows containers
+Please refer to official Microsoft's instructions on how to setup your windows machines for windows containers here: [Get started: Prep Windows for containers](https://discord.com/channels/1015999107921354932/1049145020764127352)
+
 ## General Examples
 ### 1. Pulling the image from DockerHub
 ```bash
