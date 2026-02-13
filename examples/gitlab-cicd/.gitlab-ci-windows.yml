@@ -1,0 +1,45 @@
+# GitLab CI/CD Pipeline — Run LabVIEWCLI on Windows Container
+#
+# This is an example pipeline definition equivalent to the GitHub Actions
+# workflow at .github/workflows/labview-container-check-windows.yml
+#
+# Usage:
+#   Copy this file to the root of your GitLab repository as .gitlab-ci.yml
+#   (or merge it with your existing .gitlab-ci.yml).
+#
+# Prerequisites:
+#   - A GitLab Runner registered with a Windows Docker executor
+#     (shell executor on a Windows host with Docker configured for
+#      Windows containers also works — adjust commands accordingly)
+#   - Access to Docker Hub (or your own registry) for the LabVIEW image
+
+stages:
+  - test
+
+run-labview-cli-windows:
+  stage: test
+  tags:
+    - windows
+    - docker
+  variables:
+    LABVIEW_IMAGE: "nationalinstruments/labview:latest-windows"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  before_script:
+    - docker pull "$LABVIEW_IMAGE"
+  script:
+    # 1. Run LabVIEWCLI MassCompile on Arrays examples
+    - >
+      docker run --rm
+      "$LABVIEW_IMAGE"
+      LabVIEWCLI -OperationName MassCompile
+      -DirectoryToCompile "C:\Program Files\National Instruments\LabVIEW 2026\examples\Arrays"
+      -Headless
+
+    # 2. Run CI integration script in container (mount repo into C:\workspace)
+    - >
+      docker run --rm
+      -v "${CI_PROJECT_DIR}:C:\workspace"
+      "$LABVIEW_IMAGE"
+      powershell -File "C:\workspace\examples\integration-into-cicd\runlabview.ps1"
+      -WorkspaceRoot "C:\workspace"

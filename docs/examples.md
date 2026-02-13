@@ -94,8 +94,17 @@ Example runs:
 
 Feel free to tailor the workflow to your needs—add or remove jobs, adjust environment variables, or modify volume mounts. You can also use the provided YAML definitions as a springboard for your own CI/CD pipelines. This example is meant as a reference implementation to help you quickly integrate LabVIEWCLI commands into your automated workflows.
 
+### 10. Integration into GitLab CI/CD
+Example GitLab CI/CD pipeline definitions are provided that perform the same operations as the GitHub Actions workflows above.
 
+The YAML configurations are located here:
+- [Linux pipeline](../examples/gitlab-cicd/.gitlab-ci-linux.yml)
+- [Windows pipeline](../examples/gitlab-cicd/.gitlab-ci-windows.yml)
 
+To use them:
+1. Copy the appropriate YAML file to the root of your GitLab repository and rename it to `.gitlab-ci.yml`.
+2. Push the change — GitLab will pick up the pipeline automatically on the next merge request.
 
+For full details, see the [GitLab CI/CD Integration guide](./gitlab-cicd.md).
 
 
