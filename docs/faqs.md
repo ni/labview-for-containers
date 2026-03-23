@@ -24,7 +24,7 @@
 No. The containers are designed for headless use only, meaning the LabVIEW IDE GUI is not supported inside the container.
 All interactions must happen via LabVIEWCLI (or `LabVIEW.exe --headless` for some workflows), which supports operations like RunVI, MassCompile, AnalyzeProject, and VI Analyzer runs.
 
-For more details on how headless execution behaves, see [Headless LabVIEW](./headless-labview.md).
+For more details on how headless execution behaves, see [Headless LabVIEW](./headless-labview.md). dadadada
 
 ### 2. Why do I need to install Xvfb if the container is headless?
 For Linux containers, LabVIEW still requires X11 support internally to render UI components, even when no visible display is shown.
