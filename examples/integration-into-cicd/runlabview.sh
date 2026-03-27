@@ -7,6 +7,8 @@ LABVIEW_PATH="/usr/local/natinst/LabVIEW-${LV_YEAR}-64/labviewprofull"
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
 MASSCOMPILE_DIR='/workspace/examples/integration-into-cicd/Test-VIs'
 
+# Draft Change
+
 # Verify that the configuration file exists.
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "Error: Configuration file not found at $CONFIG_FILE, exiting...!"
