@@ -46,6 +46,8 @@ The Windows Dockerfile at `examples/build-your-own-image/Dockerfile-windows` per
    - Uses a Windows Server LTSC 2022 base image.
    - Exposes `LV_YEAR` and `LV_FEED_LOCATION` as build arguments and environment variables.
    - `LV_FEED_LOCATION` should point to a valid NI feed containing the desired LabVIEW version.
+   - A Valid feed must be in the following format: `https://download.ni.com/support/nipkg/products/ni-l/ni-labview-<YEAR>/<Release Version>/released`
+   - Example: `https://download.ni.com/support/nipkg/products/ni-l/ni-labview-2026/26.1/released`
 
 2. **Configure PowerShell for Automated Installation**
    ```dockerfile
