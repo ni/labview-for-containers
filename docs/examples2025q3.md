@@ -90,31 +90,10 @@ Let's mount a local directory into the container and see the contents of a text 
 ## Example Usage: Integration with CI/CD
 The combination of the above usages along with automation tools like GitHub actions, Jenkins etc can unlock the true potential of LabVIEW in CI/CD Environments.
 
-Let's look at an example of integrating LabVIEW Container into a GitHub action. All the neccessary files are present at **{repo-root}/examples/cicd-examples**
+For detailed and up-to-date CI/CD examples (including workflows, helper scripts, and how to try it yourself), see the [CI/CD Examples](./cicd-examples.md) guide.
 
-### Testing Script
-A script designed to run LabVIEWCLI to perform `MassCompile` and `RunVIAnalyzer` operations on a set of Test-VIs.
-
-The script is located here: [run-vi-analyzer.sh](../examples/cicd-examples/helper-scripts/run-vi-analyzer/run-vi-analyzer.sh)
-
-The job of the script is to:
-1. Run LabVIEWCLI MassCompile Operation
-2. Run LabVIEWCLI VI Analyzer Operation
-3. Exit with error is any of the above operation fail.
-
-### GitHub Action
-The configuration file for example GitHub Action is located here at: [masscompile-linux-container.yml](../.github/workflows/masscompile-linux-container.yml)
-
-The action does the following:
-1. Login into GitHub Container Registry
-2. Pull in the image `labview:2025q3-linux`
-3. Mount the repository into the container
-4. Run the script `run-vi-analyzer.sh` as container's entrypoint.
-
-The action is set to be triggered when any pull request is created, updated or reopened.
-
-### Running the GitHub Action
-A testing Pull Request has been created that demonstrates the use of the script `run-vi-analyzer.sh` and the GitHub Action to run LabVIEWCLI inside a container.
+### Historical Reference
+A testing Pull Request was created that demonstrates the use of LabVIEWCLI scripts and GitHub Actions to run operations inside a container.
 
 Link to the Pull Request: [Integration into CI/CD](https://github.com/ni/labview-for-containers/pull/8)
 

@@ -1,7 +1,8 @@
 # GitLab CI/CD Pipeline — Run LabVIEWCLI on Windows Container
 #
 # This is an example pipeline definition equivalent to the GitHub Actions
-# workflow at .github/workflows/labview-container-check-windows.yml
+# workflows at .github/workflows/masscompile-windows-container.yml and
+# .github/workflows/run-vi-analyzer-windows-container.yml
 #
 # Usage:
 #   Copy this file to the root of your GitLab repository as .gitlab-ci.yml
@@ -41,5 +42,5 @@ run-labview-cli-windows:
       docker run --rm
       -v "${CI_PROJECT_DIR}:C:\workspace"
       "$LABVIEW_IMAGE"
-      powershell -File "C:\workspace\examples\integration-into-cicd\runlabview.ps1"
+      powershell -File "C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1"
       -WorkspaceRoot "C:\workspace"

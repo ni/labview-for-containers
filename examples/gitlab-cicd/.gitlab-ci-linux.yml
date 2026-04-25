@@ -1,7 +1,8 @@
 # GitLab CI/CD Pipeline — Run LabVIEWCLI on Linux Container
 #
 # This is an example pipeline definition equivalent to the GitHub Actions
-# workflow at .github/workflows/labview-container-check.yml
+# workflows at .github/workflows/masscompile-linux-container.yml and
+# .github/workflows/run-vi-analyzer-linux-container.yml
 #
 # Usage:
 #   Copy this file to the root of your GitLab repository as .gitlab-ci.yml
@@ -42,4 +43,4 @@ run-labview-cli-linux:
       docker run --rm
       -v "$CI_PROJECT_DIR:/workspace"
       "$LABVIEW_IMAGE"
-      bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
+      bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh"
