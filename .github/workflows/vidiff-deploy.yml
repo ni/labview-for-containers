@@ -1,0 +1,142 @@
+name: Deploy VIDiff Reports
+
+# This workflow runs in the base repository context (with write access)
+# after a VIDiff PR workflow completes. This enables VIDiff reports to be
+# published even for PRs from forked repositories.
+
+on:
+  workflow_run:
+    workflows:
+      - "VIDiff Report - Linux Container"
+      - "VIDiff Report - Windows Container"
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - name: Download all VIDiff report artifacts
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          pattern: vidiff-report-*
+          path: reports
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-multiple: true
+
+      - name: Download metadata artifact
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          pattern: vidiff-metadata-*
+          path: metadata
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-multiple: true
+
+      - name: Read metadata
+        id: meta
+        run: |
+          if [ ! -f metadata/pr_number ] || [ ! -f metadata/platform ] || [ ! -f metadata/vi_files ]; then
+            echo "No VIDiff metadata found (no VI changes in PR). Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          PR_NUMBER=$(cat metadata/pr_number | tr -d '[:space:]')
+          PLATFORM=$(cat metadata/platform | tr -d '[:space:]')
+          VI_FILES=$(cat metadata/vi_files)
+          echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+          echo "platform=${PLATFORM}" >> "$GITHUB_OUTPUT"
+          echo "vi_files=${VI_FILES}" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+          echo "PR: #${PR_NUMBER}, Platform: ${PLATFORM}, VIs: ${VI_FILES}"
+
+      - name: Prepare GitHub Pages content
+        if: steps.meta.outputs.skip == 'false'
+        run: |
+          PR_NUMBER="${{ steps.meta.outputs.pr_number }}"
+          PLATFORM="${{ steps.meta.outputs.platform }}"
+          DEPLOY_DIR="pages-content/pr-${PR_NUMBER}/${PLATFORM}"
+          mkdir -p "$DEPLOY_DIR"
+
+          # Copy all reports from merged artifact directory
+          if [ -d reports ] && [ "$(find reports -name '*.html' 2>/dev/null | head -1)" ]; then
+            find reports -name '*.html' -exec cp {} "$DEPLOY_DIR/" \;
+          else
+            echo "Warning: No HTML reports found in artifacts."
+            exit 0
+          fi
+
+          # Generate index page
+          {
+            echo '<!DOCTYPE html>'
+            echo '<html><head><title>VIDiff Reports</title></head><body>'
+            echo "<h1>VIDiff Reports - PR #${PR_NUMBER} (${PLATFORM})</h1>"
+            echo '<ul>'
+            for f in "$DEPLOY_DIR"/*.html; do
+              fname=$(basename "$f")
+              [ "$fname" = "index.html" ] && continue
+              viname="${fname%.html}"
+              echo "<li><a href=\"${fname}\">${viname}</a></li>"
+            done
+            echo '</ul></body></html>'
+          } > "${DEPLOY_DIR}/index.html"
+
+      - name: Deploy to GitHub Pages
+        if: steps.meta.outputs.skip == 'false'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./pages-content
+          destination_dir: vidiff
+          keep_files: true
+
+      - name: Comment on PR with report links
+        if: steps.meta.outputs.skip == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = parseInt('${{ steps.meta.outputs.pr_number }}');
+            const platform = '${{ steps.meta.outputs.platform }}';
+            const repo = context.repo;
+            const baseUrl = `https://${repo.owner}.github.io/${repo.repo}/vidiff/pr-${prNumber}/${platform}`;
+            const viFilesRaw = `${{ steps.meta.outputs.vi_files }}`.trim();
+            const separator = viFilesRaw.includes(',') ? ',' : /\s+/;
+            const viFiles = viFilesRaw.split(separator).filter(f => f.length > 0);
+
+            let body = `### 🔍 VIDiff Reports (${platform})\n\n`;
+            body += `| VI | Report |\n|---|---|\n`;
+            for (const vi of viFiles) {
+              const viName = vi.split('/').pop().replace('.vi', '');
+              body += `| \`${viName}\` | [View Report](${baseUrl}/${viName}.html) |\n`;
+            }
+            body += `\n[📄 All Reports](${baseUrl}/index.html)`;
+
+            const marker = `<!-- vidiff-${platform} -->`;
+            body = marker + '\n' + body;
+
+            const { data: comments } = await github.rest.issues.listComments({
+              ...repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find(c => c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...repo,
+                comment_id: existing.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...repo,
+                issue_number: prNumber,
+                body: body,
+              });
+            }

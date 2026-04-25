@@ -16,9 +16,12 @@ examples/cicd-examples/
 │   ├── masscompile/
 │   │   ├── masscompile.sh
 │   │   └── masscompile.ps1
-│   └── run-vi-analyzer/
-│       ├── run-vi-analyzer.sh
-│       └── run-vi-analyzer.ps1
+│   ├── run-vi-analyzer/
+│   │   ├── run-vi-analyzer.sh
+│   │   └── run-vi-analyzer.ps1
+│   └── vidiff/
+│       ├── vidiff.sh
+│       └── vidiff.ps1
 └── Test-VIs/
     ├── ArthOps.vi
     ├── BeepWrapper.vi
@@ -103,6 +106,46 @@ These workflows call the helper scripts below inside the container.
 
 ---
 
+### 3. VIDiff (CreateComparisonReport)
+
+Generates an HTML diff report comparing the base (main) and PR versions of each changed VI using LabVIEWCLI's `CreateComparisonReport` operation. The workflow automatically detects `.vi` files that changed in a pull request, runs the diff inside a LabVIEW container, publishes the reports to GitHub Pages, and posts a comment on the PR with links to each report.
+
+**Workflow files:**
+
+| Platform | Workflow |
+|---|---|
+| Linux | [`vidiff-linux-container.yml`](../.github/workflows/vidiff-linux-container.yml) |
+| Windows | [`vidiff-windows-container.yml`](../.github/workflows/vidiff-windows-container.yml) |
+
+These workflows:
+1. Detect `.vi` files changed in the PR.
+2. Check out both the PR and base branch versions.
+3. Run the helper script inside the container to generate HTML diff reports.
+4. Deploy reports to GitHub Pages under `/vidiff/pr-<number>/<platform>/`.
+5. Post a comment on the PR with links to each individual report.
+
+**Helper scripts:**
+
+1. **Script:** `vidiff.sh` (Linux / Bash)
+   - **Link:** [`helper-scripts/vidiff/vidiff.sh`](../examples/cicd-examples/helper-scripts/vidiff/vidiff.sh)
+   - Accepts workspace-relative paths to changed `.vi` files as arguments.
+   - Compares each VI's base version (`/workspace-base/`) against the PR version (`/workspace/`).
+   - Runs `LabVIEWCLI -OperationName CreateComparisonReport` with `-ReportType html`.
+   - Skips new or deleted VIs gracefully.
+   - Outputs reports to `/workspace/vidiff-reports/`.
+
+2. **Script:** `vidiff.ps1` (Windows / PowerShell)
+   - **Link:** [`helper-scripts/vidiff/vidiff.ps1`](../examples/cicd-examples/helper-scripts/vidiff/vidiff.ps1)
+   - Accepts `-WorkspaceRoot`, `-WorkspaceBaseRoot`, and `-VIFiles` parameters.
+   - Compares each VI's base version against the PR version.
+   - Runs `LabVIEWCLI -OperationName CreateComparisonReport` with `-ReportType html`.
+   - Skips new or deleted VIs gracefully.
+   - Outputs reports to `$WorkspaceRoot\vidiff-reports\`.
+
+> **Note:** The VIDiff workflows require GitHub Pages to be enabled on your repository. The first run will automatically create the `gh-pages` branch.
+
+---
+
 ## Try It Yourself
 
 All workflows are configured to trigger on **pull request** events (opened, synchronized, reopened). To see the CI/CD examples in action:
@@ -110,8 +153,9 @@ All workflows are configured to trigger on **pull request** events (opened, sync
 1. Fork this repository or create a branch.
 2. Modify any VI file in the [`Test-VIs/`](../examples/cicd-examples/Test-VIs/) folder (e.g., open a VI in LabVIEW, make a small change, and save).
 3. Raise a Pull Request against this repository.
-4. The GitHub Actions workflows will automatically run MassCompile and VI Analyzer against the modified VIs.
+4. The GitHub Actions workflows will automatically run MassCompile, VI Analyzer, and VIDiff against the modified VIs.
 5. Check the **Actions** tab on the PR to view the pipeline results.
+6. For VIDiff, check the PR comments for links to the HTML diff reports on GitHub Pages.
 
 ---
 
