@@ -18,6 +18,17 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Debug GitLab access
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
+        run: |
+          echo "Username length: ${#GITLAB_USERNAME}"
+          echo "Token length: ${#GITLAB_TOKEN}"
+          echo "Username first 3 chars: ${GITLAB_USERNAME:0:3}***"
+          # Test read access (ls-remote)
+          git ls-remote "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" HEAD && echo "READ OK" || echo "READ FAILED"
+
       - name: Push to GitLab mirror
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
