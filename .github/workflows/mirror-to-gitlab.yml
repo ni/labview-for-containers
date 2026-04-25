@@ -1,0 +1,21 @@
+name: Mirror to GitLab
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror-to-gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push to GitLab mirror
+        run: |
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/shivaCode-2/labview-for-containers.git || true
+          git push gitlab main --force
+          git push gitlab --tags --force
