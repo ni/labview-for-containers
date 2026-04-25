@@ -24,11 +24,5 @@ jobs:
         run: |
           git remote add gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" || true
           git remote set-url gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "=== DRY RUN (pull_request) ==="
-            git remote -v
-            git ls-remote gitlab 2>&1 | head -5 && echo "Authentication OK" || echo "Authentication FAILED"
-          else
-            git push gitlab main --force
-            git push gitlab --tags --force
-          fi
+          git push gitlab main --force
+          git push gitlab --tags --force
