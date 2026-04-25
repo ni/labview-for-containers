@@ -1,4 +1,6 @@
-# Headless LabVIEW
+# Headless LabVIEW — Run LabVIEW Without a Display
+
+> Run headless LabVIEW and LabVIEWCLI for LabVIEW automation, CI/CD pipelines, and containerized execution without a GUI.
 
 This document explains how to run LabVIEW in **headless mode** for automation and CI/CD workflows, how to enable it via LabVIEWCLI, and how behavior differs between LabVIEW versions and platforms.
 

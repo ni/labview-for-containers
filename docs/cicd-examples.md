@@ -1,6 +1,8 @@
-# CI/CD Examples
+# CI/CD Examples — LabVIEW Docker Container Automation with GitHub Actions
 
-This document describes the example CI/CD workflows and helper scripts included in this repository. These examples demonstrate how to integrate LabVIEW container images into automated pipelines using GitHub Actions (and GitLab CI/CD).
+> Automate LabVIEW headless builds, MassCompile, VI Analyzer, and other LabVIEWCLI operations in CI/CD pipelines using LabVIEW Docker containers.
+
+This document describes the example LabVIEW CICD workflows and helper scripts included in this repository. These examples demonstrate how to integrate LabVIEW container images into automated pipelines using GitHub Actions (and GitLab CI/CD).
 
 ---
 
@@ -42,7 +44,7 @@ The [`Test-VIs/`](../examples/cicd-examples/Test-VIs/) folder contains a set of 
 
 ### 1. MassCompile
 
-Compiles all VIs in a target directory using LabVIEWCLI's `MassCompile` operation. This validates that VIs can be loaded and compiled without errors inside the container.
+Compiles all VIs in a target directory using LabVIEWCLI's `MassCompile` operation. This validates that VIs can be loaded and compiled without errors inside the LabVIEW Docker container — a key step in any LabVIEW automated builds pipeline.
 
 **Workflow files:**
 
@@ -71,7 +73,7 @@ These workflows run the MassCompile command inline — no helper script is neede
 
 ### 2. Run VI Analyzer
 
-Runs static code analysis on the Test-VIs using LabVIEWCLI's `RunVIAnalyzer` operation with a VI Analyzer configuration file. The workflow invokes the helper script which handles parsing the results and failing the pipeline if any tests fail.
+Runs static code analysis on the Test-VIs using LabVIEWCLI's `RunVIAnalyzer` operation with a VI Analyzer configuration file. The workflow invokes a helper script that handles parsing the results and failing the pipeline if any tests fail — enabling LabVIEW automation of code quality checks.
 
 **Workflow files:**
 

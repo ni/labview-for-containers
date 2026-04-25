@@ -1,4 +1,7 @@
-# Using the Prebuilt Images (Recommended for Most Users)
+# Using the Prebuilt LabVIEW Docker Images (Recommended for Most Users)
+
+> Get started quickly with prebuilt LabVIEW Docker container images from Docker Hub — no build step required.
+
 This guide provides instructions for using the prebuilt LabVIEW container images, publicly available on Docker Hub.
 
 Use this approach if you're looking for a plug-and-play experience with minimal configuration effort.
@@ -35,7 +38,9 @@ For detailed examples on:
 - Changing the **default entrypoint**
 - **Mounting local volumes** to access your source files
 
-Please see the [Examples Guide](./examples.md)
+Please see the [Examples Guide](./examples.md).
+
+For CI/CD pipeline integration (GitHub Actions, GitLab CI/CD), see the [CI/CD Examples](./cicd-examples.md) guide.
 
 ## What's next
 - [Windows Prebuilt Images](./windows-prebuilt.md)

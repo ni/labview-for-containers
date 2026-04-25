@@ -1,4 +1,6 @@
-# GitLab CI/CD Integration
+# GitLab CI/CD Integration — LabVIEW Docker Containers
+
+> Run LabVIEWCLI operations (MassCompile, VI Analyzer, RunVI) in GitLab CI/CD pipelines using LabVIEW Docker containers for LabVIEW CICD automation.
 
 This guide shows how to use the LabVIEW container images in **GitLab CI/CD** pipelines.
 The example YAML definitions mirror the [GitHub Actions workflows](https://github.com/ni/labview-for-containers/tree/main/.github/workflows) shipped with this repository.

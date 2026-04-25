@@ -1,6 +1,8 @@
-# Frequently Asked Questions (FAQs)
+# Frequently Asked Questions — LabVIEW Docker Containers
 
-## Table of contents
+> Common questions about running LabVIEW Docker containers, headless LabVIEW, LabVIEWCLI, and LabVIEW CICD integration.
+
+## Table of Contents
 
 1. [Can I use the LabVIEW container with the full GUI/IDE?](#1-can-i-use-the-labview-container-with-the-full-guiide)
 2. [Why do I need to install Xvfb if the container is headless?](#2-why-do-i-need-to-install-xvfb-if-the-container-is-headless)
@@ -55,7 +57,7 @@ For full guidance on extending the base images, see:
 ### 5. Can I use the containers in GitHub Actions or GitLab CI pipelines?
 Absolutely. The images are specifically designed for CI/CD workflows and have LabVIEWCLI and related tooling preinstalled.
 
-See [Examples](./examples.md) for real-world CI usage patterns.
+See the [CI/CD Examples](./cicd-examples.md) guide for GitHub Actions workflows and helper scripts, or the [GitLab CI/CD Integration](./gitlab-cicd.md) guide for GitLab pipelines.
 
 ### 6. Why is `unattended=True` (or similar tokens) set in the config file?
 These INI tokens suppress pop-ups and GUI dialogs from LabVIEW, which is critical for CI automation and headless runs.
