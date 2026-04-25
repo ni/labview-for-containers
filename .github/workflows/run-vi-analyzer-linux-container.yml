@@ -1,0 +1,25 @@
+name: Run VI Analyzer - Linux Container
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  run-vi-analyzer-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull LabVIEW container image
+        run: docker pull nationalinstruments/labview:latest-linux
+
+      - name: Run VI Analyzer tests
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            nationalinstruments/labview:latest-linux \
+            bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh"

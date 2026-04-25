@@ -1,0 +1,25 @@
+name: Run VI Analyzer - Windows Container
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  run-vi-analyzer-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull LabVIEW container image
+        run: docker pull nationalinstruments/labview:latest-windows
+
+      - name: Run VI Analyzer tests
+        run: >
+          docker run --rm
+          -v "${{ github.workspace }}:C:\workspace"
+          nationalinstruments/labview:latest-windows
+          powershell -File "C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1" -WorkspaceRoot "C:\workspace"

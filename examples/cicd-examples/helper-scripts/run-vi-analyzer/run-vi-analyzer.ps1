@@ -2,7 +2,7 @@ param(
     [string]$WorkspaceRoot = "C:\workspace"
 )
 
-$ConfigFile    = Join-Path $WorkspaceRoot "examples\cicd-examples\Test-VIs\viaPassCase.viancfg"
+$ConfigFile    = Join-Path $WorkspaceRoot "examples\cicd-examples\Test-VIs\via-configs\via-config-pass.viancfg"
 $LabVIEWPath   = "C:\Program Files\National Instruments\LabVIEW 2026\LabVIEW.exe"
 $ReportPath    = "C:\ContainerExamples\Results.txt"
 

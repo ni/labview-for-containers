@@ -1,0 +1,25 @@
+name: MassCompile - Linux Container
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  masscompile-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Pull LabVIEW container image
+        run: docker pull nationalinstruments/labview:latest-linux
+
+      - name: Run LabVIEWCLI MassCompile
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace" \
+            nationalinstruments/labview:latest-linux \
+            bash -c "LabVIEWCLI -LogToConsole TRUE -OperationName MassCompile -DirectoryToCompile /workspace/examples/cicd-examples/Test-VIs -LabVIEWPath /usr/local/natinst/LabVIEW-2026-64/labview -Headless"

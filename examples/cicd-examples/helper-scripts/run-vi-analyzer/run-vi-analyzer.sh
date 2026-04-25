@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-CONFIG_FILE='/workspace/examples/cicd-examples/Test-VIs/viaPassCase.viancfg'
+CONFIG_FILE='/workspace/examples/cicd-examples/Test-VIs/via-configs/via-config-pass.viancfg'
 LV_YEAR="${LV_YEAR:-2026}"
 LABVIEW_PATH="/usr/local/natinst/LabVIEW-${LV_YEAR}-64/labviewprofull"
 REPORT_PATH='/usr/local/natinst/ContainerExamples/Results.txt'
