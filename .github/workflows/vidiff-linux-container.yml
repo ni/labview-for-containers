@@ -13,48 +13,14 @@ permissions:
   contents: read
 
 jobs:
-  detect-changes:
+  run-vidiff:
+    name: Run VIDiff on changed VIs
     runs-on: ubuntu-latest
-    outputs:
-      vi_matrix: ${{ steps.changed-vis.outputs.vi_matrix }}
-      vi_files: ${{ steps.changed-vis.outputs.vi_files }}
-      has_changes: ${{ steps.changed-vis.outputs.has_changes }}
     steps:
       - name: Checkout PR branch
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Detect changed VI files
-        id: changed-vis
-        run: |
-          CHANGED_VIS=$(git diff --name-only --diff-filter=ACMR ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- '*.vi' || true)
-          if [ -z "$CHANGED_VIS" ]; then
-            echo "No .vi files changed."
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-            echo 'vi_matrix=[]' >> "$GITHUB_OUTPUT"
-          else
-            echo "Changed VI files:"
-            echo "$CHANGED_VIS"
-            # Build JSON array for matrix
-            JSON_ARRAY=$(echo "$CHANGED_VIS" | jq -R -s -c 'split("\n") | map(select(length > 0))')
-            echo "vi_matrix=${JSON_ARRAY}" >> "$GITHUB_OUTPUT"
-            echo "vi_files=$(echo $CHANGED_VIS | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
-          fi
-
-  vidiff:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.has_changes == 'true'
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        vi: ${{ fromJson(needs.detect-changes.outputs.vi_matrix) }}
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v3
-        with:
           path: pr
 
       - name: Checkout base branch
@@ -63,37 +29,59 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha }}
           path: base
 
+      - name: Detect changed VI files
+        id: changed-vis
+        run: |
+          cd pr
+          CHANGED_VIS=$(git diff --name-only --diff-filter=ACMR ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- '*.vi' || true)
+          if [ -z "$CHANGED_VIS" ]; then
+            echo "No .vi files changed."
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Changed VI files:"
+            echo "$CHANGED_VIS"
+            echo "vi_files<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$CHANGED_VIS" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Pull LabVIEW container image
+        if: steps.changed-vis.outputs.has_changes == 'true'
         run: docker pull nationalinstruments/labview:latest-linux
 
-      - name: Run VIDiff for ${{ matrix.vi }}
+      - name: Run VIDiff
+        if: steps.changed-vis.outputs.has_changes == 'true'
         run: |
-          VI_NAME=$(basename "${{ matrix.vi }}" .vi)
-          docker run --rm \
-            -v "${{ github.workspace }}/pr:/workspace" \
-            -v "${{ github.workspace }}/base:/workspace-base" \
-            nationalinstruments/labview:latest-linux \
-            bash -c "cd /workspace/examples/cicd-examples/helper-scripts/vidiff && chmod +x vidiff.sh && ./vidiff.sh '${{ matrix.vi }}'"
+          VI_FILES="${{ steps.changed-vis.outputs.vi_files }}"
+          echo "$VI_FILES" | while IFS= read -r vi; do
+            [ -z "$vi" ] && continue
+            echo "::group::Running VIDiff for $vi"
+            docker run --rm \
+              -v "${{ github.workspace }}/pr:/workspace" \
+              -v "${{ github.workspace }}/base:/workspace-base" \
+              nationalinstruments/labview:latest-linux \
+              bash -c "cd /workspace/examples/cicd-examples/helper-scripts/vidiff && chmod +x vidiff.sh && ./vidiff.sh '$vi'"
+            echo "::endgroup::"
+          done
 
-      - name: Upload VIDiff report
+      - name: Upload VIDiff reports
+        if: steps.changed-vis.outputs.has_changes == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: vidiff-report-linux-${{ strategy.job-index }}
+          name: vidiff-report-linux
           path: ${{ github.workspace }}/pr/vidiff-reports/
 
-  upload-metadata:
-    needs: [detect-changes, vidiff]
-    if: needs.detect-changes.outputs.has_changes == 'true'
-    runs-on: ubuntu-latest
-    steps:
       - name: Save metadata
+        if: steps.changed-vis.outputs.has_changes == 'true'
         run: |
           mkdir -p metadata
           echo "${{ github.event.pull_request.number }}" > metadata/pr_number
           echo "linux" > metadata/platform
-          echo "${{ needs.detect-changes.outputs.vi_files }}" > metadata/vi_files
+          echo "${{ steps.changed-vis.outputs.vi_files }}" > metadata/vi_files
 
       - name: Upload metadata
+        if: steps.changed-vis.outputs.has_changes == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: vidiff-metadata-linux
