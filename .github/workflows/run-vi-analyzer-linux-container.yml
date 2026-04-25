@@ -6,6 +6,9 @@ on:
       - opened
       - synchronize
       - reopened
+    paths:
+      - 'examples/cicd-examples/Test-VIs/**'
+      - 'examples/cicd-examples/helper-scripts/**'
 
 jobs:
   run-vi-analyzer-linux:
