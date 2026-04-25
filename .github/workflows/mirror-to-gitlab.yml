@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
   mirror-to-gitlab:
@@ -17,31 +14,6 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-
-      - name: Debug GitLab access
-        env:
-          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
-          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
-        run: |
-          echo "Username length: ${#GITLAB_USERNAME}"
-          echo "Token length: ${#GITLAB_TOKEN}"
-          echo "Username first 3 chars: ${GITLAB_USERNAME:0:3}***"
-          
-          # Check token type and scopes via API
-          echo "=== Token info ==="
-          curl -s --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" "https://gitlab.com/api/v4/personal_access_tokens/self" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'Token name: {d.get(\"name\")}\nScopes: {d.get(\"scopes\")}\nExpires: {d.get(\"expires_at\")}\nActive: {d.get(\"active\")}\nRevoked: {d.get(\"revoked\")}')" 2>/dev/null || echo "Not a personal access token or API unavailable"
-          
-          # Check project-level access
-          echo "=== Project access level ==="
-          curl -s --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" "https://gitlab.com/api/v4/projects/shivaCode-2%2Flabview-for-containers" | python3 -c "import sys,json; d=json.load(sys.stdin); perms=d.get('permissions',{}); print(f'Project access: {perms}')" 2>/dev/null || echo "Cannot fetch project info"
-          
-          # Check protected branches
-          echo "=== Protected branches ==="
-          curl -s --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" "https://gitlab.com/api/v4/projects/shivaCode-2%2Flabview-for-containers/protected_branches" | python3 -m json.tool 2>/dev/null || echo "Cannot fetch protected branches"
-          
-          # Test read access (ls-remote)
-          echo "=== Git read test ==="
-          git ls-remote "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" HEAD && echo "READ OK" || echo "READ FAILED"
 
       - name: Push to GitLab mirror
         env:
