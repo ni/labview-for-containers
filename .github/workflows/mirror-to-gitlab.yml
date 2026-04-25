@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   mirror-to-gitlab:
@@ -17,8 +20,15 @@ jobs:
       - name: Push to GitLab mirror
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
         run: |
-          git remote add gitlab "https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" || true
-          git remote set-url gitlab "https://gitlab-ci-token:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git"
-          git push gitlab main --force
-          git push gitlab --tags --force
+          git remote add gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" || true
+          git remote set-url gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "=== DRY RUN (pull_request) ==="
+            git remote -v
+            git ls-remote gitlab 2>&1 | head -5 && echo "Authentication OK" || echo "Authentication FAILED"
+          else
+            git push gitlab main --force
+            git push gitlab --tags --force
+          fi
