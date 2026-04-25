@@ -21,8 +21,9 @@ jobs:
       - name: Push to GitLab mirror
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_USERNAME: ${{ secrets.GITLAB_USERNAME }}
         run: |
-          git remote add gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" || true
-          git remote set-url gitlab "https://oauth2:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git"
+          git remote add gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git" || true
+          git remote set-url gitlab "https://${GITLAB_USERNAME}:${GITLAB_TOKEN}@gitlab.com/shivaCode-2/labview-for-containers.git"
           git push gitlab main --force
           git push gitlab --tags --force
