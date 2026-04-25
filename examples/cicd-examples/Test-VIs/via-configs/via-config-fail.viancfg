@@ -6,7 +6,7 @@
 <TargetIndex>0</TargetIndex>
 <ItemsToAnalyze>
 	<Item>
-		<Path>"../Test-VIs"</Path>
+		<Path>".."</Path>
 		<Removed>FALSE</Removed>
 	</Item>
 </ItemsToAnalyze>
