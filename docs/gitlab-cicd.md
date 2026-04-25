@@ -37,7 +37,7 @@ See a live pipeline run here: [Linux pipeline on GitLab](https://gitlab.com/shiv
 Each example pipeline runs on **merge request events** and performs two steps:
 
 1. **MassCompile** — compiles the LabVIEW `Arrays` examples that ship inside the container image.
-2. **CI integration script** — mounts the repository into the container and runs the provided helper script ([`runlabview.sh`](../examples/integration-into-cicd/runlabview.sh) on Linux, [`runlabview.ps1`](../examples/integration-into-cicd/runlabview.ps1) on Windows) which performs MassCompile and VI Analyzer on the Test-VIs bundled in this repo.
+2. **CI integration script** — mounts the repository into the container and runs the provided helper script ([`run-vi-analyzer.sh`](../examples/cicd-examples/helper-scripts/run-vi-analyzer/run-vi-analyzer.sh) on Linux, [`run-vi-analyzer.ps1`](../examples/cicd-examples/helper-scripts/run-vi-analyzer/run-vi-analyzer.ps1) on Windows) which performs VI Analyzer on the Test-VIs bundled in this repo.
 
 ### Linux Pipeline
 
@@ -66,7 +66,7 @@ run-labview-cli-linux:
       -LabVIEWPath /usr/local/natinst/LabVIEW-2026-64/labview -Headless"
     - >
       docker run --rm -v "$CI_PROJECT_DIR:/workspace" "$LABVIEW_IMAGE"
-      bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
+      bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh"
 ```
 
 ### Windows Pipeline
@@ -94,7 +94,7 @@ run-labview-cli-windows:
       -DirectoryToCompile "C:\Program Files\National Instruments\LabVIEW 2026\examples\Arrays" -Headless
     - >
       docker run --rm -v "${CI_PROJECT_DIR}:C:\workspace" "$LABVIEW_IMAGE"
-      powershell -File "C:\workspace\examples\integration-into-cicd\runlabview.ps1" -WorkspaceRoot "C:\workspace"
+      powershell -File "C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1" -WorkspaceRoot "C:\workspace"
 ```
 
 ---

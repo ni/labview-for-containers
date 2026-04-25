@@ -1,8 +1,8 @@
 # GitLab CI/CD Pipeline — Run LabVIEWCLI on LabVIEW Containers
 #
 # This pipeline mirrors the GitHub Actions workflows at
-# .github/workflows/labview-container-check.yml and
-# .github/workflows/labview-container-check-windows.yml
+# .github/workflows/masscompile-linux-container.yml and
+# .github/workflows/masscompile-windows-container.yml
 #
 # It runs on merge request events and executes LabVIEWCLI operations
 # inside LabVIEW container images from Docker Hub.
@@ -41,7 +41,7 @@ run-labview-cli-linux:
       docker run --rm
       -v "$CI_PROJECT_DIR:/workspace"
       "$LABVIEW_IMAGE"
-      bash -c "cd /workspace/examples/integration-into-cicd && chmod +x runlabview.sh && ./runlabview.sh"
+      bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh"
 
 # ──────────────────────────────────────────────
 #  Windows Job (requires a self-hosted Windows runner — see docs/gitlab-cicd.md)
@@ -73,5 +73,5 @@ run-labview-cli-windows:
       docker run --rm
       -v "${CI_PROJECT_DIR}:C:\workspace"
       "$LABVIEW_IMAGE"
-      powershell -File "C:\workspace\examples\integration-into-cicd\runlabview.ps1"
+      powershell -File "C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1"
       -WorkspaceRoot "C:\workspace"

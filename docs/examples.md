@@ -49,8 +49,8 @@ LabVIEWCLI -OperationName MassCompile -DirectoryToCompile "C:\Program Files\Nati
 ![MassCompile](../examples/MassCompileHeadless.png)
 
 For other supported operations, see example scripts here: 
-1. [Example Script for Windows](../examples/integration-into-cicd/runlabview.ps1)
-2. [Example Script for Linux](../examples/integration-into-cicd/runlabview.sh)
+1. [Example Script for Windows](../examples/cicd-examples/helper-scripts/run-vi-analyzer/run-vi-analyzer.ps1)
+2. [Example Script for Linux](../examples/cicd-examples/helper-scripts/run-vi-analyzer/run-vi-analyzer.sh)
 
 ### 7. Closing LabVIEW Gracefully
 The recommended way to close a Headless LabVIEW instance is through LabVIEWCLI `CloseLabVIEW` operation.
