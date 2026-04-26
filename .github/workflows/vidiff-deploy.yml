@@ -67,9 +67,9 @@ jobs:
           DEPLOY_DIR="pages-content/pr-${PR_NUMBER}/${PLATFORM}"
           mkdir -p "$DEPLOY_DIR"
 
-          # Copy all reports from merged artifact directory
+          # Copy all reports (HTML + associated _files directories) from artifact
           if [ -d reports ] && [ "$(find reports -name '*.html' 2>/dev/null | head -1)" ]; then
-            find reports -name '*.html' -exec cp {} "$DEPLOY_DIR/" \;
+            cp -r reports/* "$DEPLOY_DIR/"
           else
             echo "Warning: No HTML reports found in artifacts."
             exit 0
