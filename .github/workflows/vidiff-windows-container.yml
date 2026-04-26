@@ -44,7 +44,7 @@ jobs:
             echo "vi_files<<EOF" >> "$GITHUB_OUTPUT"
             echo "$CHANGED_VIS" >> "$GITHUB_OUTPUT"
             echo "EOF" >> "$GITHUB_OUTPUT"
-            echo "vi_files_csv=$(echo $CHANGED_VIS | tr '\n' ',')" >> "$GITHUB_OUTPUT"
+            echo "vi_files_csv=$(echo "$CHANGED_VIS" | tr '\n' ',' | sed 's/,$//')" >> "$GITHUB_OUTPUT"
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
