@@ -53,7 +53,9 @@ jobs:
           VI_FILES=$(cat metadata/vi_files)
           echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
           echo "platform=${PLATFORM}" >> "$GITHUB_OUTPUT"
-          echo "vi_files=${VI_FILES}" >> "$GITHUB_OUTPUT"
+          echo "vi_files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$VI_FILES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
           echo "skip=false" >> "$GITHUB_OUTPUT"
           echo "PR: #${PR_NUMBER}, Platform: ${PLATFORM}, VIs: ${VI_FILES}"
 
