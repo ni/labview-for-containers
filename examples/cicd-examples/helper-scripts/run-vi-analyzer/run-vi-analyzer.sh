@@ -47,6 +47,11 @@ fi
 
 echo "Number of failed tests: $FAILED_COUNT"
 
+# Copy report to workspace for artifact upload
+RESULTS_DIR='/workspace/examples/cicd-examples/Test-VIs/via-results-temp'
+mkdir -p "$RESULTS_DIR"
+cp "$REPORT_PATH" "$RESULTS_DIR/Results.txt" 2>/dev/null || true
+
 # 4) Exit based on count
 if (( FAILED_COUNT > 0 )); then
   echo "✖ Some tests failed. Exiting with error."

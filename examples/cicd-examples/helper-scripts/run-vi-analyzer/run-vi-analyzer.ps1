@@ -56,6 +56,15 @@ if (Test-Path -Path $ReportPath) {
 
 Write-Host "Number of failed tests: $failedCount"
 
+# Copy report to workspace for artifact upload
+$resultsDir = Join-Path $WorkspaceRoot "examples\cicd-examples\Test-VIs\via-results-temp"
+if (-not (Test-Path -Path $resultsDir)) {
+    New-Item -ItemType Directory -Path $resultsDir -Force | Out-Null
+}
+if (Test-Path -Path $ReportPath) {
+    Copy-Item -Path $ReportPath -Destination (Join-Path $resultsDir "Results.txt") -Force
+}
+
 if ($failedCount -gt 0) {
     Write-Host "Some tests failed. Exiting with error." -ForegroundColor Red
     Write-Host "########################################################################################"
