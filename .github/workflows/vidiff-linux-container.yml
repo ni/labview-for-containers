@@ -33,9 +33,9 @@ jobs:
         id: changed-vis
         run: |
           cd pr
-          CHANGED_VIS=$(git diff --name-only --diff-filter=ACMR ${{ github.event.pull_request.base.sha }} ${{ github.sha }} -- '*.vi' || true)
+          CHANGED_VIS=$(git diff --name-only --diff-filter=ACMR ${{ github.event.pull_request.base.sha }} ${{ github.sha }} || true)
           if [ -z "$CHANGED_VIS" ]; then
-            echo "No .vi files changed."
+            echo "No changed files detected."
             echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
             echo "Changed VI files:"
