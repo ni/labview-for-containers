@@ -43,21 +43,17 @@ jobs:
       - name: Read metadata
         id: meta
         run: |
-          if [ ! -f metadata/pr_number ] || [ ! -f metadata/platform ] || [ ! -f metadata/vi_files ]; then
+          if [ ! -f metadata/pr_number ] || [ ! -f metadata/platform ]; then
             echo "No VIDiff metadata found (no VI changes in PR). Skipping."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           PR_NUMBER=$(cat metadata/pr_number | tr -d '[:space:]')
           PLATFORM=$(cat metadata/platform | tr -d '[:space:]')
-          VI_FILES=$(cat metadata/vi_files)
           echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
           echo "platform=${PLATFORM}" >> "$GITHUB_OUTPUT"
-          echo "vi_files<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$VI_FILES" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
           echo "skip=false" >> "$GITHUB_OUTPUT"
-          echo "PR: #${PR_NUMBER}, Platform: ${PLATFORM}, VIs: ${VI_FILES}"
+          echo "PR: #${PR_NUMBER}, Platform: ${PLATFORM}"
 
       - name: Prepare GitHub Pages content
         if: steps.meta.outputs.skip == 'false'
@@ -85,7 +81,8 @@ jobs:
               fname=$(basename "$f")
               [ "$fname" = "index.html" ] && continue
               viname="${fname%.html}"
-              echo "<li><a href=\"${fname}\">${viname}</a></li>"
+              encoded=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$fname'))")
+              echo "<li><a href=\"${encoded}\">${viname}</a></li>"
             done
             echo '</ul></body></html>'
           } > "${DEPLOY_DIR}/index.html"
@@ -104,19 +101,26 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
             const prNumber = parseInt('${{ steps.meta.outputs.pr_number }}');
             const platform = '${{ steps.meta.outputs.platform }}';
             const repo = context.repo;
             const baseUrl = `https://${repo.owner}.github.io/${repo.repo}/vidiff/pr-${prNumber}/${platform}`;
-            const viFilesRaw = `${{ steps.meta.outputs.vi_files }}`.trim();
-            const separator = viFilesRaw.includes(',') ? ',' : /\s+/;
-            const viFiles = viFilesRaw.split(separator).filter(f => f.length > 0);
+            const deployDir = `pages-content/pr-${prNumber}/${platform}`;
+
+            // Build the table from actual report files on disk
+            const reports = fs.readdirSync(deployDir)
+              .filter(f => f.endsWith('.html') && f !== 'index.html')
+              .sort();
+
+            if (reports.length === 0) return;
 
             let body = `### 🔍 VIDiff Reports (${platform})\n\n`;
             body += `| VI | Report |\n|---|---|\n`;
-            for (const vi of viFiles) {
-              const viName = vi.split('/').pop().replace('.vi', '');
-              body += `| \`${viName}\` | [View Report](${baseUrl}/${viName}.html) |\n`;
+            for (const report of reports) {
+              const displayName = report.replace('.html', '');
+              body += `| \`${displayName}\` | [View Report](${baseUrl}/${encodeURIComponent(report)}) |\n`;
             }
             body += `\n[📄 All Reports](${baseUrl}/index.html)`;
 
