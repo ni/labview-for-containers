@@ -25,4 +25,11 @@ jobs:
           docker run --rm
           -v "${{ github.workspace }}:C:\workspace"
           nationalinstruments/labview:latest-windows
-          powershell -File "C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1" -WorkspaceRoot "C:\workspace"
+          powershell -Command "& 'C:\workspace\examples\cicd-examples\helper-scripts\run-vi-analyzer\run-vi-analyzer.ps1' -WorkspaceRoot 'C:\workspace'; Copy-Item 'C:\ContainerExamples\Results.txt' 'C:\workspace\vi-analyzer-report.txt' -ErrorAction SilentlyContinue"
+
+      - name: Upload VI Analyzer report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vi-analyzer-report-windows
+          path: ${{ github.workspace }}\vi-analyzer-report.txt

@@ -25,4 +25,11 @@ jobs:
           docker run --rm \
             -v "${{ github.workspace }}:/workspace" \
             nationalinstruments/labview:latest-linux \
-            bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh"
+            bash -c "cd /workspace/examples/cicd-examples/helper-scripts/run-vi-analyzer && chmod +x run-vi-analyzer.sh && ./run-vi-analyzer.sh && cp /usr/local/natinst/ContainerExamples/Results.txt /workspace/vi-analyzer-report.txt || true"
+
+      - name: Upload VI Analyzer report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vi-analyzer-report-linux
+          path: ${{ github.workspace }}/vi-analyzer-report.txt
