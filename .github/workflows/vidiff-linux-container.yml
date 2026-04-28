@@ -78,7 +78,6 @@ jobs:
           mkdir -p metadata
           echo "${{ github.event.pull_request.number }}" > metadata/pr_number
           echo "linux" > metadata/platform
-          echo "${{ steps.changed-vis.outputs.vi_files }}" > metadata/vi_files
 
       - name: Upload metadata
         if: steps.changed-vis.outputs.has_changes == 'true'
