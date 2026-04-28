@@ -18,12 +18,13 @@ echo "ReportPath: $REPORT_PATH"
 echo " "
 
 # Run the LabVIEWCLI VIA command.
+CLI_EXIT=0
 LabVIEWCLI -LogToConsole TRUE \
 -OperationName RunVIAnalyzer \
 -ConfigPath $CONFIG_FILE \
 -ReportPath $REPORT_PATH \
 -LabVIEWPath $LABVIEW_PATH \
--Headless
+-Headless || CLI_EXIT=$?
 
 echo "Done running of VI Analyzer Tests"
 echo "Printing Results..."
