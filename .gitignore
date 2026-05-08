@@ -1,0 +1,5 @@
+*.aliases
+*.lvlps
+.cache/
+*.UserState
+.DS_Store
