@@ -75,7 +75,7 @@ jobs:
           Write-Host "Workspace root: ${{ github.workspace }}"
           Write-Host "Expected report directory: $reportDir"
           if (Test-Path $reportDir) {
-            Write-Host "Contents of $reportDir:"
+            Write-Host "Contents of ${reportDir}:"
             Get-ChildItem -Path $reportDir -Recurse | Select-Object FullName, Length
           } else {
             Write-Host "Expected report directory does not exist."
