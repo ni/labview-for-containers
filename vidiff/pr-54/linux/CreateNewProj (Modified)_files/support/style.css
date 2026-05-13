@@ -1,0 +1,244 @@
+body {
+    background-color: white;
+}
+
+div.report {
+    margin: 32px 32px 32px 32px;
+}
+
+div.report-summary {
+    margin: 32px 32px 32px 32px;
+}
+
+div.included-attributes {
+    margin-bottom: 16px;
+}
+
+h1.report-title {
+    color: black;
+    text-align: left;
+    font-family: "Noto Serif", serif;
+    font-weight: 400;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+h2.section-header {
+    color: black;
+    text-align: left;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+div.general-info {
+    margin-top: 0;
+}
+
+div.general-info-contents {
+    margin-left: 0;
+}
+
+p.generation-time {
+    margin: 0;
+    margin-top: 8px;
+    padding: 0;
+}
+
+span.general-info-label {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+div.compared-VIs {
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+p.compared-VI {
+    margin: 0;
+}
+
+div.included-attributes {
+    margin-top: 8px;
+}
+
+div.detailed-info {
+    margin-top: 8px;
+}
+
+ul.inclusion-list {
+    list-style-type: none; /* Remove bullets */
+    margin-bottom: 0;
+    margin-right: 0;
+    margin-left: 0px;
+    margin-top: 0;
+    padding: 0;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+ul.inclusion-list li {
+    padding-left: 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+ul.inclusion-list .checked {
+    background-image: url('checked-image.png');
+}
+
+ul.inclusion-list .unchecked {
+    background-image: url('unchecked-image.png');
+}
+
+details {
+    padding-bottom: 0px;
+    padding-left: 10px;
+}
+
+details.cosmetic {
+    padding-left: 10px;
+    border-style: none;
+    border-color: #1616171A;
+    border-radius: 5px;
+}
+
+table.vi-hier-status-list th, td {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+table.difference{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr.compared-vi-image-captions {
+  // border-bottom: solid #1616171A;
+}
+
+td.compared-vi-image-caption {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+tr.compared-images {
+}
+
+td.diff-image {
+    width: 50%;
+    padding: 10px;
+    vertical-align: top;
+}
+
+td.difference-divider {
+    width: 2px;
+    min-width: 2px;
+    max-width: 2px;
+    // background-color: #1616171A;
+}
+
+img.difference-image {
+    padding: 10px;
+    // margin: 10px;
+    max-width: 100%;
+    border-style: dashed;
+    border-color: #1616171A;
+    border-radius: 10px;
+}
+
+summary.vi-difference-heading {
+    color: black;
+    text-align: left;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0; 
+    margin-top: 24px;
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+summary.difference-heading {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+summary.difference-cosmetic-heading {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    color: gray;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+div.dropdown-left {
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    vertical-align: top;
+    word-wrap: break-word;
+}
+
+div.dropdown-right {
+    display: inline-block;
+    width: 40%;
+    margin: 0;
+    padding-left: 20px;
+    vertical-align: top;
+    word-wrap: break-word;
+}
+
+p.diff-details-heading {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ol.detailed-description-list {
+    margin-left: 16px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+}
+
+li.diff-detail {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+li.diff-detail-cosmetic {
+    color: gray;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 0px;
+}
+
+p {
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
