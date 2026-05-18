@@ -12,6 +12,7 @@ Headless mode is available starting with **LabVIEW 2026 Q1**.
 - [How to Enable Headless Mode](#how-to-enable-headless-mode)
 	- [Using LabVIEWCLI](#using-labviewcli)
 	- [Direct LabVIEW Launch](#direct-labview-launch)
+    - [Setting Headless Mode as default](#setting-headless-mode-as-default)
 - [Behavior in Headless Mode](#behavior-in-headless-mode)
 	- [UI and Interaction](#ui-and-interaction)
 	- [Licensing and Entitlements](#licensing-and-entitlements)
@@ -105,10 +106,9 @@ LabVIEW.exe --headless
 
 This form is primarily useful for advanced users or internal tooling. For general automation and container usage, prefer **LabVIEWCLI with `-Headless`**, which passes this switch for you.
 
-```
-	If you wish to not use the headless argument on every invocation of LabVIEW or LabVIEWCLI, consider setting the environment variable LV_RTE_HEADLESS=1.
-	This environment variable is a global override setting which would make LabVIEW and Run-Time Engine launch in Headless Mode by default.
-```
+### Setting Headless Mode as default
+If you wish to not use the headless argument on every invocation of LabVIEW or LabVIEWCLI, consider setting the environment variable LV_RTE_HEADLESS=1.
+This environment variable is a global override setting which would make LabVIEW and Run-Time Engine launch in Headless Mode by default.
 
 ## Behavior in Headless Mode
 
