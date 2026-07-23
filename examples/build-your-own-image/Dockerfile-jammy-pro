@@ -2,15 +2,15 @@
 # Setup Dependencies
 ########################################################################################################################################################################################
 
-# Base image for this is ubuntu 22.04
-FROM ubuntu:22.04
+# Base image for this is ubuntu 26.04
+FROM ubuntu:26.04
 
 # -------------------------------
 # Handle LabVIEW year properly
 # -------------------------------
 # ARG is for build-time (can be overridden with --build-arg)
 # ENV makes it available inside RUN and in the container
-ARG LV_YEAR=2026
+ARG LV_YEAR=2027
 ENV LV_YEAR=${LV_YEAR}
 
 # Enable CICD Features
