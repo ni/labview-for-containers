@@ -49,6 +49,7 @@ RUN (nipkg feed-add --name=LV%LV_YEAR% %LV_FEED_LOCATION%) && \
     rmdir /S /Q "C:\ProgramData\National Instruments\NI Package Manager\packages"
 
 # Enable VI Server and cleaup resources folder
-RUN move C:\\ni\\resources\\LabVIEW.ini "%USERPROFILE%\Documents\LabVIEW Data\LabVIEW %LV_YEAR%\LabVIEW.ini" && \
+RUN move C:\\ni\\resources\\LabVIEW.ini "%USERPROFILE%\\Documents\\LabVIEW Data\\%LV_YEAR%(64-bit)\\LabVIEW.ini" && \
+    move C:\\ni\\resources\\LabVIEW.ini "C:\\Program Files\\National Instruments\\LabVIEW %LV_YEAR%\\LabVIEW.ini" && \
     move C:\\ni\\resources\\LabVIEWCLI.ini "C:\\Program Files (x86)\\National Instruments\\Shared\\LabVIEW CLI\\LabVIEWCLI.ini" && \
     rmdir /S /Q "C:\ni\resources"
