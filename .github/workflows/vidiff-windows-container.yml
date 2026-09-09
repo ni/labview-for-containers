@@ -69,6 +69,22 @@ jobs:
 
       - name: Upload VIDiff reports
         if: steps.changed-vis.outputs.has_changes == 'true'
+        shell: pwsh
+        run: |
+          $reportDir = Join-Path "${{ github.workspace }}" "pr\vidiff-reports"
+          Write-Host "Workspace root: ${{ github.workspace }}"
+          Write-Host "Expected report directory: $reportDir"
+          if (Test-Path $reportDir) {
+            Write-Host "Contents of ${reportDir}:"
+            Get-ChildItem -Path $reportDir -Recurse | Select-Object FullName, Length
+          } else {
+            Write-Host "Expected report directory does not exist."
+          }
+          Write-Host "VIDiff report directories discovered under PR checkout:"
+          Get-ChildItem -Path (Join-Path "${{ github.workspace }}" "pr") -Directory -Recurse -Filter "vidiff-reports" | Select-Object FullName
+
+      - name: Upload VIDiff reports artifact
+        if: steps.changed-vis.outputs.has_changes == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: vidiff-report-windows

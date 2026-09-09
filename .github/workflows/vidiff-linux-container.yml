@@ -65,6 +65,20 @@ jobs:
             echo "::endgroup::"
           done
 
+      - name: Debug generated reports
+        if: steps.changed-vis.outputs.has_changes == 'true'
+        run: |
+          REPORT_DIR="${{ github.workspace }}/pr/vidiff-reports"
+          echo "Report directory: $REPORT_DIR"
+          if [ -d "$REPORT_DIR" ]; then
+            echo "Contents of $REPORT_DIR:"
+            find "$REPORT_DIR" -maxdepth 5 -type f | sort
+            HTML_COUNT=$(find "$REPORT_DIR" -type f -name '*.html' | wc -l)
+            echo "HTML report count: $HTML_COUNT"
+          else
+            echo "Report directory does not exist: $REPORT_DIR"
+          fi
+
       - name: Upload VIDiff reports
         if: steps.changed-vis.outputs.has_changes == 'true'
         uses: actions/upload-artifact@v4
